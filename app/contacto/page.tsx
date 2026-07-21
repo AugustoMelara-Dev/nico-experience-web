@@ -1,9 +1,21 @@
-import type { Metadata } from "next";
-import { Clock3, MapPin, MessageCircle } from "lucide-react";
-import { ContactForm } from "@/components/contact-form";
+import type { Metadata } from "next"
+import Footer from "@/components/footer"
+import { ContactForm } from "@/components/contact-form"
 
-export const metadata: Metadata = { title: "Contacto", description: "Prepara una consulta de disponibilidad con Nico Experience.", alternates: { canonical: "/contacto" } };
+export const metadata: Metadata = { title: "Contacto", description: "Prepara una consulta de disponibilidad con Nico Experience.", alternates: { canonical: "/contacto" } }
 
 export default function ContactPage() {
-  return <main id="contenido" className="bg-sand"><section className="container-site grid gap-12 py-16 sm:py-24 lg:grid-cols-[.7fr_1.3fr]"><div><h1 className="font-display text-6xl font-semibold leading-none text-forest sm:text-7xl">Hablemos de tu próxima estadía</h1><p className="mt-6 leading-8 text-muted">Prepara una consulta con la fecha y cantidad de personas. Cuando el canal oficial esté configurado, se abrirá WhatsApp con el mensaje listo.</p><div className="mt-10 space-y-5 text-sm"><p className="flex gap-3"><MessageCircle className="size-5 text-terracotta" /> WhatsApp y teléfono: pendientes de confirmación</p><p className="flex gap-3"><MapPin className="size-5 text-terracotta" /> Zona de atención: Honduras</p><p className="flex gap-3"><Clock3 className="size-5 text-terracotta" /> Horario de atención: pendiente de confirmación</p></div></div><ContactForm /></section></main>;
+  return (
+    <main id="contenido">
+      <section className="mx-auto grid max-w-6xl gap-12 px-4 py-28 lg:grid-cols-[.7fr_1.3fr] lg:items-start">
+        <div className="space-y-5">
+          <span className="w-fit text-sm bg-card px-2 py-1 border border-border rounded-full">Contacto</span>
+          <h1 className="text-4xl font-medium tracking-tighter sm:text-6xl bg-linear-to-b from-sky-800 dark:from-sky-100 to-foreground dark:to-foreground bg-clip-text text-transparent">Consulta tu próxima estadía</h1>
+          <p className="leading-8 text-muted-foreground">Prepara un mensaje con fecha y cantidad de personas. El número oficial todavía debe configurarse en el entorno antes de poder abrir WhatsApp.</p>
+        </div>
+        <ContactForm />
+      </section>
+      <Footer />
+    </main>
+  )
 }

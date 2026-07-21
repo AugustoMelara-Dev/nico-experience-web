@@ -1,5 +1,17 @@
-import Link from "next/link";
+import Link from "next/link"
+import { Button } from "@/components/ui/button"
 
 export default function NotFound() {
-  return <main id="contenido" className="grid min-h-[70svh] place-items-center bg-sand px-4 text-center"><div><p className="text-sm font-bold uppercase tracking-[.2em] text-terracotta">404</p><h1 className="mt-4 font-display text-6xl font-semibold text-forest">Este camino no lleva a una cabaña</h1><p className="mx-auto mt-5 max-w-lg leading-7 text-muted">La página que buscas no existe o el hospedaje ya no está activo.</p><Link href="/cabanas" className="mt-8 inline-flex rounded-lg bg-forest px-6 py-3 text-sm font-bold text-white hover:bg-forest-deep">Ver cabañas activas</Link></div></main>;
+  return (
+    <main id="contenido" className="min-h-[70svh] px-4 py-28">
+      <div className="mx-auto flex max-w-xl flex-col items-center gap-5 text-center">
+        <span className="rounded-full border border-border bg-card px-2 py-1 text-sm">404</span>
+        <h1 className="text-4xl font-medium tracking-tighter sm:text-6xl bg-linear-to-b from-foreground to-muted-foreground bg-clip-text text-transparent">
+          Esta página no está disponible
+        </h1>
+        <p className="text-muted-foreground">El alojamiento no existe o no está activo.</p>
+        <Button asChild><Link href="/alojamientos">Ver alojamientos</Link></Button>
+      </div>
+    </main>
+  )
 }

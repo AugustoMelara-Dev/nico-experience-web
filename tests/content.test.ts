@@ -1,40 +1,57 @@
-import { describe, expect, it } from "vitest";
-import { activeProperties, getProperty, properties } from "../content/properties";
-import { buildWhatsAppUrl, normalizeWhatsAppNumber } from "../lib/whatsapp";
+import { describe, expect, it } from "vitest"
+import { activeProperties, getProperty, properties } from "../content/properties"
+import { buildWhatsAppUrl, normalizeWhatsAppNumber } from "../lib/whatsapp"
 
-describe("property content", () => {
-  it("publishes only active properties", () => {
-    expect(activeProperties.every((property) => property.active)).toBe(true);
-    expect(activeProperties.length).toBe(properties.filter((property) => property.active).length);
-  });
+const slug = "casa-palac-frente-a-playa"
 
-  it("resolves the valid Casa VIP slug", () => {
-    expect(getProperty("casa-vip")?.name).toBe("Casa VIP");
-  });
+describe("contenido de alojamientos", () => {
+  it("publica únicamente propiedades activas", () => {
+    expect(activeProperties.every((property) => property.active)).toBe(true)
+    expect(activeProperties.length).toBe(properties.filter((property) => property.active).length)
+  })
 
-  it("does not resolve an invalid slug", () => {
-    expect(getProperty("no-existe")).toBeUndefined();
-  });
+  it("resuelve Casa Palac con el nombre y slug correctos", () => {
+    expect(getProperty(slug)?.name).toBe("Casa Palac frente a playa")
+  })
 
-  it("has essential sharing content", () => {
-    const property = getProperty("casa-vip");
-    expect(property?.featuredImage).toMatch(/^\/images\//);
-    expect(property?.shortDescription.length).toBeGreaterThan(20);
-    expect(property?.gallery.length).toBeGreaterThan(0);
-  });
-});
+  it("no resuelve un slug inexistente", () => {
+    expect(getProperty("no-existe")).toBeUndefined()
+  })
 
-describe("WhatsApp links", () => {
-  it("normalizes an international number", () => {
-    expect(normalizeWhatsAppNumber("+504 9999-9999")).toBe("50499999999");
-  });
+  it("incluye las 25 fotografías analizadas y sus textos accesibles", () => {
+    const property = getProperty(slug)!
+    const images = property.media.filter((item) => item.type === "image")
+    expect(images).toHaveLength(25)
+    expect(images.every((item) => item.src.startsWith("/images/casa-palac-frente-a-playa/"))).toBe(true)
+    expect(images.every((item) => Boolean(item.alt && item.title && item.description))).toBe(true)
+  })
 
-  it("includes number and contextual message", () => {
-    const url = buildWhatsAppUrl("Consulta Casa VIP para 4 personas", "+504 9999-9999");
-    expect(url).toBe("https://wa.me/50499999999?text=Consulta%20Casa%20VIP%20para%204%20personas");
-  });
+  it("usa la URL oficial de Maps", () => {
+    expect(getProperty(slug)?.mapUrl).toBe("https://maps.app.goo.gl/BhDjLciEvjhp8pBN8?g_st=iw")
+  })
 
-  it("returns null until a number is configured", () => {
-    expect(buildWhatsAppUrl("Hola", "")).toBeNull();
-  });
-});
+  it("no publica reseñas, precios, capacidad ni inventario sin confirmar", () => {
+    const property = getProperty(slug)!
+    expect(property.reviews).toEqual([])
+    expect(property.price).toBeUndefined()
+    expect(property.capacity).toBeUndefined()
+    expect(property.kitchenInventory).toEqual([])
+  })
+})
+
+describe("enlaces de WhatsApp", () => {
+  it("normaliza un número internacional", () => {
+    expect(normalizeWhatsAppNumber("+504 9999-9999")).toBe("50499999999")
+  })
+
+  it("incluye el nombre correcto en el mensaje codificado", () => {
+    const message = getProperty(slug)!.whatsappMessage
+    const url = buildWhatsAppUrl(message, "+504 9999-9999")!
+    expect(decodeURIComponent(url)).toContain("Casa Palac frente a playa")
+    expect(url.startsWith("https://wa.me/50499999999?text=")).toBe(true)
+  })
+
+  it("no inventa un destino si el número no está configurado", () => {
+    expect(buildWhatsAppUrl("Hola", "")).toBeNull()
+  })
+})

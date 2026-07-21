@@ -1,26 +1,58 @@
-import Link from "next/link";
-import { siteConfig } from "@/config/site";
+"use client"
+
+import Link from "next/link"
+import { motion } from "framer-motion"
+import { MapPin, MessageCircle } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Separator } from "@/components/ui/separator"
+import { buildWhatsAppUrl } from "@/lib/whatsapp"
+import { getProperty } from "@/content/properties"
 
 export default function Footer() {
+  const year = new Date().getFullYear()
+  const property = getProperty("casa-palac-frente-a-playa")!
+  const whatsappUrl = buildWhatsAppUrl(property.whatsappMessage)
+  const footerLinks = [
+    { name: "Inicio", href: "/" },
+    { name: "Alojamientos", href: "/alojamientos" },
+    { name: "Casa Palac", href: `/alojamientos/${property.slug}` },
+    { name: "Preguntas", href: "/#preguntas" },
+  ]
+
   return (
-    <footer className="bg-forest-deep text-white">
-      <div className="container-site grid gap-10 py-14 md:grid-cols-[1.4fr_1fr_1fr]">
-        <div>
-          <Link href="/" className="font-display text-3xl font-semibold">Nico Experience</Link>
-          <p className="mt-4 max-w-sm text-sm leading-7 text-white/70">Hospedajes en Honduras con atención cercana y espacios para disfrutar sin prisa.</p>
-        </div>
-        <div>
-          <p className="text-sm font-bold uppercase tracking-[0.16em] text-white/55">Navegación</p>
-          <div className="mt-4 flex flex-col gap-3">{siteConfig.navigation.map((item) => <Link key={item.href} href={item.href} className="w-fit text-sm text-white/80 hover:text-white">{item.label}</Link>)}</div>
-        </div>
-        <div>
-          <p className="text-sm font-bold uppercase tracking-[0.16em] text-white/55">Información</p>
-          <p className="mt-4 text-sm leading-7 text-white/70">WhatsApp, teléfono, redes y ubicación general pendientes de confirmación.</p>
-        </div>
-      </div>
-      <div className="border-t border-white/10">
-        <div className="container-site flex flex-col gap-2 py-5 text-xs text-white/55 sm:flex-row sm:items-center sm:justify-between"><span>© {new Date().getFullYear()} Nico Experience.</span><span>Plantilla base bajo licencia MIT.</span></div>
+    <footer className="w-full border-t bg-card/50">
+      <div className="mx-auto max-w-6xl px-4 py-10 sm:py-12">
+        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="space-y-8">
+          <div className="grid gap-8 sm:grid-cols-2 sm:gap-10 lg:grid-cols-3">
+            <div className="space-y-3">
+              <Link href="/" className="inline-block text-xl font-medium tracking-tight transition-opacity hover:opacity-80">Nico Experience</Link>
+              <p className="max-w-xs text-sm leading-relaxed text-muted-foreground">Hospedajes para descansar, compartir y disfrutar momentos especiales en Honduras.</p>
+            </div>
+            <div className="space-y-3">
+              <h3 className="text-sm font-semibold">Enlaces</h3>
+              <div className="flex flex-col gap-2">
+                {footerLinks.map((item) => <Link key={item.name} href={item.href} className="text-sm text-muted-foreground transition-colors hover:text-foreground">{item.name}</Link>)}
+              </div>
+            </div>
+            <div className="space-y-3">
+              <h3 className="text-sm font-semibold">Contacto</h3>
+              <div className="flex gap-2">
+                <Button asChild variant="ghost" size="icon" className="h-9 w-9 rounded-full">
+                  <Link href={property.mapUrl!} target="_blank" rel="noopener noreferrer" aria-label="Ver ubicación en Google Maps"><MapPin className="h-4 w-4" /></Link>
+                </Button>
+                <Button asChild variant="ghost" size="icon" className="h-9 w-9 rounded-full">
+                  <Link href={whatsappUrl ?? "/contacto"} target={whatsappUrl ? "_blank" : undefined} rel={whatsappUrl ? "noopener noreferrer" : undefined} aria-label="Consultar por WhatsApp"><MessageCircle className="h-4 w-4" /></Link>
+                </Button>
+              </div>
+            </div>
+          </div>
+          <Separator />
+          <div className="flex flex-col items-center justify-between gap-2 text-center text-sm text-muted-foreground sm:flex-row sm:text-left">
+            <span>© {year} Nico Experience. Todos los derechos reservados.</span>
+            <span className="font-medium">Hospedajes en Honduras</span>
+          </div>
+        </motion.div>
       </div>
     </footer>
-  );
+  )
 }

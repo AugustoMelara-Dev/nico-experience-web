@@ -1,31 +1,39 @@
-"use client";
+"use client"
 
-import { FormEvent, useState } from "react";
-import { Send } from "lucide-react";
-import { track } from "@vercel/analytics";
-import { buildWhatsAppUrl } from "@/lib/whatsapp";
+import { FormEvent, useState } from "react"
+import { Send } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent } from "@/components/ui/card"
+import { buildWhatsAppUrl } from "@/lib/whatsapp"
+
+const inputClass = "mt-2 h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]"
 
 export function ContactForm() {
-  const [notice, setNotice] = useState("");
+  const [notice, setNotice] = useState("")
+
   function submit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    const form = new FormData(event.currentTarget);
-    const message = `Hola, soy ${String(form.get("name"))}. Me interesa ${String(form.get("property")) || "un hospedaje"}. Fecha: ${String(form.get("date")) || "por definir"}. Personas: ${String(form.get("guests")) || "por definir"}.`;
-    const url = buildWhatsAppUrl(message);
-    track("contact_form_submit", { channel: url ? "whatsapp" : "pending" });
-    if (url) window.open(url, "_blank", "noopener,noreferrer");
-    else setNotice("El número oficial de WhatsApp aún está pendiente de confirmación. Tus datos no fueron enviados ni almacenados.");
+    event.preventDefault()
+    const form = new FormData(event.currentTarget)
+    const message = `Hola, vi Casa Palac frente a playa en la página de Nico Experience. Soy ${String(form.get("name"))}. Fecha aproximada: ${String(form.get("date")) || "por definir"}. Personas: ${String(form.get("guests")) || "por definir"}. Me gustaría consultar disponibilidad.`
+    const url = buildWhatsAppUrl(message)
+    if (url) window.open(url, "_blank", "noopener,noreferrer")
+    else setNotice("El número oficial de WhatsApp está pendiente de configuración. Tus datos no fueron enviados ni almacenados.")
   }
+
   return (
-    <form onSubmit={submit} className="rounded-[1.25rem] bg-white p-6 shadow-[0_18px_60px_rgba(23,63,53,.08)] sm:p-9">
-      <div className="grid gap-5 sm:grid-cols-2">
-        <label className="text-sm font-semibold text-forest">Nombre<input required name="name" autoComplete="name" className="mt-2 h-12 w-full rounded-lg border border-forest/20 bg-sand-light px-4 font-normal text-ink" /></label>
-        <label className="text-sm font-semibold text-forest">Hospedaje<input name="property" defaultValue="Casa VIP" className="mt-2 h-12 w-full rounded-lg border border-forest/20 bg-sand-light px-4 font-normal text-ink" /></label>
-        <label className="text-sm font-semibold text-forest">Fecha aproximada<input name="date" type="date" className="mt-2 h-12 w-full rounded-lg border border-forest/20 bg-sand-light px-4 font-normal text-ink" /></label>
-        <label className="text-sm font-semibold text-forest">Cantidad de personas<input name="guests" type="number" min="1" className="mt-2 h-12 w-full rounded-lg border border-forest/20 bg-sand-light px-4 font-normal text-ink" /></label>
-      </div>
-      <button type="submit" className="mt-6 inline-flex h-12 items-center justify-center gap-2 rounded-lg bg-terracotta px-6 text-sm font-bold text-white hover:bg-terracotta-dark"><Send className="size-4" /> Preparar consulta</button>
-      {notice && <p role="status" className="mt-5 rounded-lg bg-sand p-4 text-sm leading-6 text-forest">{notice}</p>}
-    </form>
-  );
+    <Card className="rounded-2xl">
+      <CardContent>
+        <form onSubmit={submit} className="space-y-5">
+          <div className="grid gap-5 sm:grid-cols-2">
+            <label className="text-sm font-medium">Nombre<input required name="name" autoComplete="name" className={inputClass} /></label>
+            <label className="text-sm font-medium">Alojamiento<input name="property" value="Casa Palac frente a playa" readOnly className={inputClass} /></label>
+            <label className="text-sm font-medium">Fecha aproximada<input name="date" type="date" className={inputClass} /></label>
+            <label className="text-sm font-medium">Cantidad de personas<input name="guests" type="number" min="1" className={inputClass} /></label>
+          </div>
+          <Button type="submit"><Send /> Preparar consulta</Button>
+          {notice && <p role="status" className="rounded-lg border border-border bg-card p-4 text-sm leading-6 text-muted-foreground">{notice}</p>}
+        </form>
+      </CardContent>
+    </Card>
+  )
 }
