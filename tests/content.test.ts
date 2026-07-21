@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest"
 import { activeProperties, getProperty, properties } from "../content/properties"
 import { buildWhatsAppUrl, normalizeWhatsAppNumber } from "../lib/whatsapp"
+import sitemap from "../app/sitemap"
 
 const slug = "casa-palac"
 
@@ -32,6 +33,12 @@ describe("contenido de alojamientos", () => {
 
   it("usa la URL oficial de Maps", () => {
     expect(getProperty(slug)?.mapUrl).toBe("https://maps.app.goo.gl/BhDjLciEvjhp8pBN8?g_st=iw")
+  })
+
+  it("publica únicamente la URL canónica de Casa Palac en el sitemap", () => {
+    const urls = sitemap().map(({ url }) => url)
+    expect(urls.some((url) => url.endsWith("/alojamientos/casa-palac"))).toBe(true)
+    expect(urls.some((url) => url.endsWith("/alojamientos/casa-palac-frente-a-playa"))).toBe(false)
   })
 
   it("publica solo inventario documentado y omite datos sin confirmar", () => {
