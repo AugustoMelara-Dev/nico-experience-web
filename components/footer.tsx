@@ -8,6 +8,8 @@ import { Separator } from "@/components/ui/separator"
 import { buildWhatsAppUrl } from "@/lib/whatsapp"
 import { getProperty } from "@/content/properties"
 import { siteConfig } from "@/config/site"
+import { brandConfig } from "@/config/brand"
+import { BrandLogo } from "@/components/brand-logo"
 
 export default function Footer() {
   const year = new Date().getFullYear()
@@ -27,8 +29,9 @@ export default function Footer() {
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="space-y-8">
           <div className="grid gap-8 sm:grid-cols-2 sm:gap-10 lg:grid-cols-3">
             <div className="space-y-3">
-              <Link href="/" className="inline-block text-xl font-medium tracking-tight transition-opacity hover:opacity-80">Nico Experience</Link>
+              <Link href="/" className="inline-block transition-opacity hover:opacity-80" aria-label="Nico Experience, inicio"><BrandLogo /></Link>
               <p className="max-w-sm text-sm leading-relaxed text-muted-foreground">Turismo y soluciones integrales con atención personalizada para viajes, hospedaje, trámites, gestiones y soluciones digitales.</p>
+              <p className="max-w-sm text-sm font-medium text-primary">{brandConfig.tagline}</p>
             </div>
             <div className="space-y-3">
               <h3 className="text-sm font-semibold">Enlaces</h3>

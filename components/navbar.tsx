@@ -8,6 +8,7 @@ import { House, MapPin } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import ThemeSwitcher from "@/components/theme-switcher"
+import { BrandLogo } from "@/components/brand-logo"
 
 const menuItems = [
   { name: "Inicio", href: "/" },
@@ -42,10 +43,14 @@ export default function NavBar() {
             </Button>
           </div>
           <div className="flex sm:hidden">
-            <Link href="/" className="font-light tracking-tighter text-lg">Nico Experience</Link>
+            <Link href="/" aria-label="Nico Experience, inicio">
+              <BrandLogo compact priority />
+            </Link>
           </div>
           <div className="hidden sm:flex items-center space-x-8">
-            <Link href="/" className="font-light tracking-tighter text-2xl">Nico Experience</Link>
+            <Link href="/" aria-label="Nico Experience, inicio">
+              <BrandLogo compact priority />
+            </Link>
             <Button asChild variant="ghost" size="sm"><Link href="/#servicios">Servicios</Link></Button>
             <Button asChild variant="ghost" size="sm"><Link href="/alojamientos">Alojamientos</Link></Button>
             <Button asChild variant="ghost" size="sm"><Link href="/#preguntas">Preguntas</Link></Button>

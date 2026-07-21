@@ -84,6 +84,22 @@ def save_pdf_jpeg(
     print(f"{source.name} -> {destination.relative_to(ROOT)}")
 
 
+def save_compact_wordmark(source: Path, destination: Path) -> None:
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    image = normalized_rgb(source)
+    width, height = image.size
+    wordmark = image.crop(
+        (
+            round(width * 0.055),
+            round(height * 0.52),
+            round(width * 0.945),
+            round(height * 0.69),
+        )
+    )
+    wordmark.save(destination, "WEBP", quality=92, method=6)
+    print(f"{source.name} -> {destination.relative_to(ROOT)}")
+
+
 def property_sources() -> dict[str, Path]:
     sources = sorted(PROPERTY_SOURCE.glob("*.jpeg"))
     if len(sources) != len(PROPERTY_NAMES):
@@ -104,6 +120,10 @@ def main() -> None:
         BRAND_SOURCE,
         ROOT / "public" / "brand" / "nico-experience-logo.jpg",
         (1000, 563),
+    )
+    save_compact_wordmark(
+        BRAND_SOURCE,
+        ROOT / "public" / "brand" / "nico-experience-wordmark.webp",
     )
     save_web(
         HERO_SOURCE,

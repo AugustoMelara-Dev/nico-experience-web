@@ -1,4 +1,4 @@
-import { existsSync } from "node:fs"
+import { existsSync, readFileSync } from "node:fs"
 import { join } from "node:path"
 import { describe, expect, it } from "vitest"
 import { brandConfig } from "../config/brand"
@@ -19,6 +19,7 @@ describe("identidad de Nico Experience", () => {
   it("mantiene disponibles los activos optimizados", () => {
     for (const src of [
       brandConfig.logoWeb,
+      brandConfig.logoCompactWeb,
       brandConfig.logoPdf,
       brandConfig.heroImage,
     ]) {
@@ -28,5 +29,25 @@ describe("identidad de Nico Experience", () => {
         ),
       ).toBe(true)
     }
+  })
+
+  it("integra los tokens de marca y el logotipo en el shell", () => {
+    const globals = readFileSync(
+      join(process.cwd(), "app/globals.css"),
+      "utf8",
+    )
+    const navbar = readFileSync(
+      join(process.cwd(), "components/navbar.tsx"),
+      "utf8",
+    )
+    const footer = readFileSync(
+      join(process.cwd(), "components/footer.tsx"),
+      "utf8",
+    )
+
+    expect(globals).toContain("--brand-navy: #061e68")
+    expect(globals).toContain("--brand-gold: #d6993a")
+    expect(navbar).toContain("<BrandLogo")
+    expect(footer).toContain("<BrandLogo")
   })
 })
