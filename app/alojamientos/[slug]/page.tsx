@@ -76,7 +76,7 @@ export default async function PropertyDetailPage({ params }: PageProps) {
             <ShareButton title={property.name} />
           </div>
         </div>
-        <div className="pointer-events-none absolute -top-32 right-0 -z-10 flex h-full w-full justify-end"><div className="flex w-3/4 justify-center"><div className="h-150 w-12 rotate-35 rounded-3xl bg-light blur-[70px]" /></div></div>
+        <div className="pointer-events-none absolute -top-32 right-0 -z-10 flex h-full w-full justify-end"><div className="flex w-3/4 justify-center"><div className="h-150 w-12 rounded-3xl bg-light blur-[70px] will-change-transform max-sm:rotate-15 sm:rotate-35" /></div></div>
       </section>
 
       <section className="mx-auto max-w-6xl px-4 pb-20">

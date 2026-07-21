@@ -48,7 +48,7 @@ export function GalleryLightbox({ images, title }: { images: PropertyMedia[]; ti
             <DialogTitle>{title}</DialogTitle>
             <DialogDescription>Usa las flechas del teclado o los controles para recorrer el álbum.</DialogDescription>
           </DialogHeader>
-          <Carousel setApi={setApi} opts={{ loop: true, startIndex: selected }} aria-label={`Álbum ${title}`}>
+          <Carousel className="min-w-0" setApi={setApi} opts={{ loop: true, startIndex: selected }} aria-label={`Álbum ${title}`}>
             <CarouselContent>
               {images.map((image) => (
                 <CarouselItem key={image.src}>
