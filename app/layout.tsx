@@ -13,14 +13,14 @@ const geist = Geist({
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.siteUrl),
-  title: { default: "Nico Experience | Hospedajes en Honduras", template: "%s | Nico Experience" },
+  title: { default: "Nico Experience | Turismo y soluciones integrales", template: "%s | Nico Experience" },
   description: siteConfig.description,
   alternates: { canonical: "/" },
   openGraph: {
     type: "website",
     locale: "es_HN",
     siteName: siteConfig.name,
-    title: "Nico Experience | Hospedajes en Honduras",
+    title: "Nico Experience | Turismo y soluciones integrales",
     description: siteConfig.description,
     images: ["/opengraph-image.png"],
   },

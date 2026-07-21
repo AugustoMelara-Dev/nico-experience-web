@@ -2,7 +2,8 @@ const env = (value: string | undefined) => value?.trim() ?? ""
 
 export const siteConfig = {
   name: "Nico Experience",
-  description: "Hospedajes para descansar, compartir y disfrutar Honduras a tu ritmo.",
+  description:
+    "Turismo y soluciones integrales en Tocoa, Colón: viajes, hospedaje, trámites, gestiones y soluciones digitales con atención personalizada.",
   siteUrl: env(process.env.NEXT_PUBLIC_SITE_URL) || "http://localhost:3000",
   whatsappNumber: env(process.env.NEXT_PUBLIC_WHATSAPP_NUMBER),
   phone: env(process.env.NEXT_PUBLIC_PHONE),
