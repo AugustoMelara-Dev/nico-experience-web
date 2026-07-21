@@ -83,7 +83,7 @@ export default async function PropertyDetailPage({ params }: PageProps) {
         <Card className="overflow-hidden rounded-2xl">
           <CardContent className="p-4 sm:p-6">
             <div className="relative aspect-[16/9] overflow-hidden rounded-xl border border-border">
-              <Image src={property.featuredImage} alt={`Piscina iluminada de ${property.name}`} fill loading="eager" sizes="(min-width: 1200px) 1152px, 100vw" className="object-cover" />
+              <Image src={property.featuredImage} alt={`Vista principal de ${property.name}`} fill loading="eager" quality={90} sizes="(min-width: 1200px) 1152px, 100vw" className="object-cover" />
             </div>
           </CardContent>
         </Card>
@@ -105,7 +105,7 @@ export default async function PropertyDetailPage({ params }: PageProps) {
       <section aria-labelledby="album-title" className="mx-auto max-w-7xl px-4 py-20 md:px-6">
         <div className="mb-10 text-center">
           <h2 id="album-title" className="text-xl font-semibold sm:text-2xl bg-linear-to-b from-foreground to-muted-foreground text-transparent bg-clip-text">{property.name}</h2>
-          <p className="mt-3 text-muted-foreground">Álbum de {images.length} fotografías. Selecciona una imagen para verla en detalle.</p>
+          <p className="mt-3 text-muted-foreground">Álbum de la casa ubicada frente a la playa · {images.length} fotografías.</p>
         </div>
         <GalleryLightbox images={images} title={property.name} />
       </section>
@@ -115,13 +115,16 @@ export default async function PropertyDetailPage({ params }: PageProps) {
           <Card className="rounded-2xl">
             <CardContent className="space-y-4">
               <h2 className="text-xl font-semibold">Distribución de espacios</h2>
-              <p className="text-sm leading-7 text-muted-foreground">Las fotografías muestran sala, comedor, cocina, habitaciones, baños, terrazas, piscina y áreas exteriores. La cantidad exacta de habitaciones, baños y capacidad está pendiente de confirmación.</p>
+              <p className="text-sm leading-7 text-muted-foreground">Las fotografías muestran sala, comedor, cocina, habitaciones, baño con tina de hidromasaje visible, terrazas, piscina y áreas exteriores. La cantidad exacta de habitaciones, baños y capacidad se confirma directamente al consultar.</p>
             </CardContent>
           </Card>
           <Card className="rounded-2xl">
             <CardContent className="space-y-4">
               <h2 className="text-xl font-semibold">Cocina y equipamiento</h2>
-              <p className="text-sm leading-7 text-muted-foreground">Cocina disponible para preparar alimentos durante la estadía. El inventario de utensilios y electrodomésticos incluidos está pendiente de confirmación.</p>
+              <p className="text-sm leading-7 text-muted-foreground">La información proporcionada documenta el siguiente equipamiento visible:</p>
+              <ul className="grid grid-cols-2 gap-2 text-sm text-muted-foreground">
+                {property.kitchenInventory?.map((item) => <li key={item}>• {item}</li>)}
+              </ul>
             </CardContent>
           </Card>
         </div>

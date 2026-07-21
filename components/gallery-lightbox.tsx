@@ -34,7 +34,7 @@ export function GalleryLightbox({ images, title }: { images: PropertyMedia[]; ti
             aria-label={`Ampliar: ${image.title}`}
           >
             <AspectRatio ratio={4 / 3}>
-              <Image src={image.src} alt={image.alt ?? image.title} fill sizes="(min-width: 768px) 25vw, 50vw" className="object-cover transition-transform duration-300 group-hover:scale-105" />
+              <Image src={image.src} alt={image.alt ?? image.title} fill quality={90} sizes="(min-width: 768px) 25vw, 50vw" className="object-cover transition-transform duration-300 group-hover:scale-105" />
             </AspectRatio>
             <span className="absolute right-2 top-2 rounded-full border border-border bg-background/80 p-2 opacity-0 backdrop-blur transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100"><Expand className="size-4" aria-hidden="true" /></span>
             <span className="block p-3 text-sm font-medium">{image.title}</span>
@@ -54,7 +54,7 @@ export function GalleryLightbox({ images, title }: { images: PropertyMedia[]; ti
                 <CarouselItem key={image.src}>
                   <figure>
                     <div className="relative mx-auto aspect-[4/3] max-h-[68svh] overflow-hidden rounded-xl border border-border bg-card">
-                      <Image src={image.src} alt={image.alt ?? image.title} fill sizes="(min-width: 1024px) 80vw, 95vw" className="object-contain" />
+                      <Image src={image.src} alt={image.alt ?? image.title} fill quality={90} sizes="(min-width: 1024px) 80vw, 95vw" className="object-contain" />
                     </div>
                     <figcaption className="mt-4 space-y-1 text-center">
                       <div className="font-medium">{image.title}</div>

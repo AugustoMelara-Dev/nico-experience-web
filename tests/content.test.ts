@@ -34,12 +34,19 @@ describe("contenido de alojamientos", () => {
     expect(getProperty(slug)?.mapUrl).toBe("https://maps.app.goo.gl/BhDjLciEvjhp8pBN8?g_st=iw")
   })
 
-  it("no publica reseñas, precios, capacidad ni inventario sin confirmar", () => {
+  it("publica solo inventario documentado y omite datos sin confirmar", () => {
     const property = getProperty(slug)!
     expect(property.reviews).toEqual([])
     expect(property.price).toBeUndefined()
     expect(property.capacity).toBeUndefined()
-    expect(property.kitchenInventory).toEqual([])
+    expect(property.kitchenInventory).toEqual([
+      "Estufa",
+      "Refrigeradora",
+      "Microondas",
+      "Gabinetes",
+      "Área de trabajo",
+    ])
+    expect(property.kitchenInventory).not.toContain("Cafetera")
   })
 })
 

@@ -46,7 +46,7 @@ export default function Pricing() {
               </div>
               <CardContent className="p-4 pt-6 sm:p-6 sm:pt-8">
                 <div className="relative mb-5 aspect-[4/3] overflow-hidden rounded-xl border border-border">
-                  <Image src={property.featuredImage} alt={`Piscina iluminada de ${property.name}`} fill sizes="(min-width: 768px) 33vw, 100vw" className="object-cover" />
+                  <Image src={property.featuredImage} alt={`Piscina iluminada de ${property.name}`} fill quality={90} sizes="(min-width: 768px) 33vw, 100vw" className="object-cover" />
                 </div>
                 <div className="mb-5 text-center sm:mb-6">
                   <h3 className="mb-2 text-lg font-semibold sm:text-xl">{property.name}</h3>
