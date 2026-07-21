@@ -31,6 +31,10 @@ yarn-error.log*
 # vercel
 .vercel
 
+# original high-resolution source photos kept locally, not deployed
+/source-photos/
+/.corepack-bin/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

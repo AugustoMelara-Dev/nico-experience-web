@@ -1,103 +1,68 @@
-# SaaS Landing Template
+# Nico Experience Web
 
-A modern, production-ready SaaS landing page template built with Next.js, React, Tailwind CSS, and shadcn/ui-inspired components.
+Catálogo turístico de Nico Experience construido sobre el historial de [`gonzalochale/saas-landing-template`](https://github.com/gonzalochale/saas-landing-template), conservando su licencia MIT.
 
-## Overview
+## Páginas
 
-This repository provides a clean and customizable marketing site foundation for SaaS products, including common sections such as:
+- `/` — presentación, hospedaje destacado, beneficios, galería y preguntas frecuentes.
+- `/cabanas` — catálogo de propiedades activas.
+- `/cabanas/casa-vip` — detalle estable de Casa VIP, galería ampliable, precios, reglas y consulta.
+- `/nosotros` — presentación de Nico Experience.
+- `/contacto` — formulario que prepara un mensaje de WhatsApp sin simular envíos.
 
-- Hero
-- Partners
-- Stats
-- Pricing
-- Testimonials
-- FAQ
-- Footer
-
-The project is designed to be easy to brand, extend, and deploy.
-
-## Tech Stack
-
-- Next.js 16 (App Router)
-- React 19
-- TypeScript
-- Tailwind CSS 4
-- Radix UI primitives
-- Framer Motion
-- next-themes (dark/light mode)
-
-## Project Structure
-
-```text
-app/
-	layout.tsx
-	page.tsx
-	globals.css
-components/
-	hero.tsx
-	pricing.tsx
-	testimonials.tsx
-	faq.tsx
-	footer.tsx
-	ui/
-lib/
-	utils.ts
-```
-
-## Getting Started
-
-### Prerequisites
-
-- Node.js 20+
-- pnpm (recommended)
-
-### Installation
+## Desarrollo
 
 ```bash
-git clone https://github.com/gonzalochale/saas-landing-template.git
-cd saas-landing-template
 pnpm install
-```
-
-### Development
-
-```bash
+cp .env.example .env.local
 pnpm dev
 ```
 
-Open http://localhost:3000 in your browser.
+Comprobaciones:
 
-## Available Scripts
+```bash
+pnpm lint
+pnpm typecheck
+pnpm test
+pnpm build
+```
 
-- `pnpm dev` – Start development server with Turbopack
-- `pnpm build` – Create production build
-- `pnpm start` – Start production server
-- `pnpm lint` – Run linting with Next.js ESLint config
+## Configuración
 
-## Customization Guide
+Las variables públicas están documentadas en `.env.example`. `NEXT_PUBLIC_WHATSAPP_NUMBER` debe usar formato internacional, solo con dígitos; por ejemplo, `50499999999`. Mientras el número no esté configurado, los CTA llevan a Contacto y el formulario explica que no envió ni almacenó información.
 
-Common updates when adapting this template for your product:
+La configuración general vive en `config/site.ts`. No se deben agregar secretos a variables que comiencen por `NEXT_PUBLIC_`.
 
-1. Update copy and CTA text in `components/hero.tsx` and `components/pricing.tsx`
-2. Replace testimonials and social links in `components/testimonials.tsx` and `components/footer.tsx`
-3. Adjust branding (name, colors, theme details) in `app/globals.css` and component-level classes
-4. Add or remove sections in `app/page.tsx`
+## Agregar una cabaña
 
-## Deployment
+1. Optimiza las fotografías y guárdalas en `public/images/<slug>/`.
+2. Agrega un objeto que cumpla `Property` en `content/properties.ts`.
+3. Define un `slug` único, `featuredImage`, textos alternativos y solo datos confirmados.
+4. Marca `active: true` cuando pueda publicarse.
+5. Ejecuta lint, typecheck, test y build. La ruta `/cabanas/<slug>` y el sitemap se generan automáticamente.
 
-The project is ready to deploy on platforms that support Next.js (recommended: Vercel).
+## Cambiar fotografías, precios o textos
 
-Typical deployment flow:
+- Fotografías y textos por propiedad: `content/properties.ts`.
+- Precio: campo `price` de la propiedad; depósito y persona adicional tienen campos propios.
+- Identidad, contactos, navegación y URL pública: `config/site.ts` y variables de entorno.
+- Estilos globales: `app/globals.css`.
 
-1. Push repository to GitHub
-2. Import project into your hosting provider
-3. Build command: `pnpm build`
-4. Start command: `pnpm start`
+## Datos pendientes antes de una campaña comercial
 
-## Contributing
+- Número oficial de WhatsApp y teléfono.
+- Enlaces oficiales de redes y Google Maps.
+- Ubicación más específica y horario de atención.
+- Logo oficial.
+- Capacidad, cantidad de habitaciones/baños y distribución de camas.
+- Inventario confirmado de cocina y otras amenidades.
+- Videos y reseñas verificadas.
+- Confirmación de que precios, depósito, horarios y reglas de Casa VIP siguen vigentes.
 
-Contributions are welcome. Please open an issue to discuss major changes before submitting a pull request.
+## Despliegue
 
-## License
+Configura las variables de `.env.example` en Vercel y usa `pnpm build`. Para conectar un dominio, abre **Project Settings → Domains**, agrega el dominio y aplica los registros DNS que indique Vercel; después actualiza `NEXT_PUBLIC_SITE_URL` con la URL canónica.
 
-Distributed under the MIT License. See [license.txt](license.txt) for details.
+## Licencia
+
+El código base se distribuye bajo la licencia MIT incluida en [`license.txt`](./license.txt).
