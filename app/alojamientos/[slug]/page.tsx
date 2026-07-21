@@ -1,19 +1,16 @@
 import type { Metadata } from "next"
-import Image from "next/image"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import { BedDouble, CookingPot, House, MapPin, Waves, Armchair, ExternalLink } from "lucide-react"
 import { activeProperties, getProperty } from "@/content/properties"
 import { siteConfig } from "@/config/site"
 import { GalleryLightbox } from "@/components/gallery-lightbox"
-import { ShareButton } from "@/components/share-button"
-import { WhatsAppLink } from "@/components/whatsapp-link"
+import { PropertyHero } from "@/components/property-hero"
 import { PropertyVideos } from "@/components/property-videos"
 import Faq from "@/components/faq"
 import Footer from "@/components/footer"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb"
 
 type PageProps = { params: Promise<{ slug: string }> }
 
@@ -55,39 +52,7 @@ export default async function PropertyDetailPage({ params }: PageProps) {
   return (
     <main id="contenido">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }} />
-      <section className="relative">
-        <div className="max-w-(--breakpoint-xl) mx-auto px-4 pt-10 md:px-8">
-          <Breadcrumb>
-            <BreadcrumbList>
-              <BreadcrumbItem><Link href="/" className="transition-colors hover:text-foreground">Inicio</Link></BreadcrumbItem>
-              <BreadcrumbSeparator />
-              <BreadcrumbItem><Link href="/alojamientos" className="transition-colors hover:text-foreground">Alojamientos</Link></BreadcrumbItem>
-              <BreadcrumbSeparator />
-              <BreadcrumbItem><BreadcrumbPage>{property.name}</BreadcrumbPage></BreadcrumbItem>
-            </BreadcrumbList>
-          </Breadcrumb>
-        </div>
-        <div className="max-w-(--breakpoint-xl) mx-auto px-4 py-20 gap-12 md:px-8 flex flex-col justify-center items-center text-center">
-          <span className="w-fit text-sm bg-card px-2 py-1 border border-border rounded-full">{property.locationLabel}</span>
-          <h1 className="max-w-4xl text-4xl font-medium tracking-tighter md:text-6xl text-pretty bg-linear-to-b from-sky-800 dark:from-sky-100 to-foreground dark:to-foreground bg-clip-text text-transparent">{property.name}</h1>
-          <p className="max-w-2xl text-lg text-muted-foreground text-balance">{property.shortDescription}</p>
-          <div className="flex flex-col justify-center gap-3 sm:flex-row">
-            <WhatsAppLink message={property.whatsappMessage} label="Consultar disponibilidad" />
-            <ShareButton title={property.name} />
-          </div>
-        </div>
-        <div className="pointer-events-none absolute -top-32 right-0 -z-10 flex h-full w-full justify-end"><div className="flex w-3/4 justify-center"><div className="h-150 w-12 rounded-3xl bg-light blur-[70px] will-change-transform max-sm:rotate-15 sm:rotate-35" /></div></div>
-      </section>
-
-      <section className="mx-auto max-w-6xl px-4 pb-20">
-        <Card className="overflow-hidden rounded-2xl">
-          <CardContent className="p-4 sm:p-6">
-            <div className="relative aspect-[16/9] overflow-hidden rounded-xl border border-border">
-              <Image src={property.featuredImage} alt={`Vista principal de ${property.name}`} fill loading="eager" quality={90} sizes="(min-width: 1200px) 1152px, 100vw" className="object-cover" />
-            </div>
-          </CardContent>
-        </Card>
-      </section>
+      <PropertyHero property={property} />
 
       <section className="mx-auto grid max-w-6xl gap-10 px-4 py-20 lg:grid-cols-[.65fr_1.35fr]">
         <div>
