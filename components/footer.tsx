@@ -10,7 +10,7 @@ import { getProperty } from "@/content/properties"
 
 export default function Footer() {
   const year = new Date().getFullYear()
-  const property = getProperty("casa-palac-frente-a-playa")!
+  const property = getProperty("casa-palac")!
   const whatsappUrl = buildWhatsAppUrl(property.whatsappMessage)
   const footerLinks = [
     { name: "Inicio", href: "/" },

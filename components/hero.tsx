@@ -7,7 +7,7 @@ import { motion } from "framer-motion"
 import Link from "next/link"
 
 export default function Hero() {
-  const property = getProperty("casa-palac-frente-a-playa")!
+  const property = getProperty("casa-palac")!
 
   return (
     <div className="relative justify-center items-center">

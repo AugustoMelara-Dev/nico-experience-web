@@ -14,7 +14,7 @@ export const siteConfig = {
   navigation: [
     { label: "Inicio", href: "/" },
     { label: "Alojamientos", href: "/alojamientos" },
-    { label: "Casa Palac", href: "/alojamientos/casa-palac-frente-a-playa" },
+    { label: "Casa Palac", href: "/alojamientos/casa-palac" },
     { label: "Preguntas", href: "/#preguntas" },
     { label: "Contacto", href: "/contacto" },
   ],

@@ -14,7 +14,7 @@ export function ContactForm() {
   function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
     const form = new FormData(event.currentTarget)
-    const message = `Hola, vi Casa Palac frente a playa en la página de Nico Experience. Soy ${String(form.get("name"))}. Fecha aproximada: ${String(form.get("date")) || "por definir"}. Personas: ${String(form.get("guests")) || "por definir"}. Me gustaría consultar disponibilidad.`
+    const message = `Hola, vi Casa Palac en la página de Nico Experience. Soy ${String(form.get("name"))}. Fecha aproximada: ${String(form.get("date")) || "por definir"}. Personas: ${String(form.get("guests")) || "por definir"}. Me gustaría consultar disponibilidad.`
     const url = buildWhatsAppUrl(message)
     if (url) window.open(url, "_blank", "noopener,noreferrer")
     else setNotice("El número oficial de WhatsApp está pendiente de configuración. Tus datos no fueron enviados ni almacenados.")
@@ -26,7 +26,7 @@ export function ContactForm() {
         <form onSubmit={submit} className="space-y-5">
           <div className="grid gap-5 sm:grid-cols-2">
             <label className="text-sm font-medium">Nombre<input required name="name" autoComplete="name" className={inputClass} /></label>
-            <label className="text-sm font-medium">Alojamiento<input name="property" value="Casa Palac frente a playa" readOnly className={inputClass} /></label>
+            <label className="text-sm font-medium">Alojamiento<input name="property" value="Casa Palac" readOnly className={inputClass} /></label>
             <label className="text-sm font-medium">Fecha aproximada<input name="date" type="date" className={inputClass} /></label>
             <label className="text-sm font-medium">Cantidad de personas<input name="guests" type="number" min="1" className={inputClass} /></label>
           </div>

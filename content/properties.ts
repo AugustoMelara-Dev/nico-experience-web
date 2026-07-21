@@ -93,16 +93,16 @@ const photo = (
 
 export const properties = z.array(propertySchema).parse([
   {
-    slug: "casa-palac-frente-a-playa",
-    name: "Casa Palac frente a playa",
-    shortDescription: "Un alojamiento frente a playa con espacios para descansar y compartir.",
+    slug: "casa-palac",
+    name: "Casa Palac",
+    shortDescription: "Una casa ubicada frente a la playa, con espacios para descansar y compartir.",
     description:
-      "Casa Palac frente a playa reúne ambientes interiores, terrazas de madera, piscina y áreas de descanso. Las fotografías muestran espacios pensados para compartir con calma durante una estadía junto al mar.",
-    locationLabel: "Frente a playa, Honduras",
+      "Casa Palac está ubicada frente a la playa y reúne ambientes interiores, terrazas de madera, piscina y áreas de descanso. Las fotografías muestran espacios pensados para compartir con calma durante una estadía junto al mar.",
+    locationLabel: "Frente a la playa",
     mapUrl: "https://maps.app.goo.gl/BhDjLciEvjhp8pBN8?g_st=iw",
     featuredImage: image("piscina-noche-principal"),
     media: [
-      photo("piscina-noche-principal", "Piscina iluminada", "Una piscina iluminada que transforma la noche en un espacio agradable para relajarse y compartir.", "Piscina iluminada de Casa Palac frente a playa rodeada por terrazas de madera", "piscina"),
+      photo("piscina-noche-principal", "Piscina iluminada", "Una piscina iluminada que transforma la noche en un espacio agradable para relajarse y compartir.", "Piscina iluminada de Casa Palac rodeada por terrazas de madera", "piscina"),
       photo("piscina-terraza-noche-01", "Piscina y terraza", "La piscina se integra con las terrazas de madera para disfrutar el exterior durante la noche.", "Vista nocturna de la piscina junto a una terraza de madera", "piscina"),
       photo("piscina-terraza-noche-02", "Terraza junto a la piscina", "Un rincón exterior para conversar y descansar junto a la piscina iluminada.", "Mobiliario de terraza junto a la piscina iluminada", "terraza"),
       photo("piscina-terraza-noche-03", "Ambiente nocturno", "La iluminación permite apreciar la conexión entre piscina, terraza y áreas exteriores.", "Piscina y estructuras de madera iluminadas durante la noche", "piscina"),
@@ -129,7 +129,7 @@ export const properties = z.array(propertySchema).parse([
       photo("pasillo-interior", "Pasillo interior", "El pasillo comunica los distintos ambientes interiores de la casa.", "Pasillo interior con puertas y acabados de madera", "otros"),
     ],
     amenities: [
-      { label: "Frente a playa", icon: "map-pin", confirmed: true },
+      { label: "Frente a la playa", icon: "map-pin", confirmed: true },
       { label: "Piscina", icon: "waves", confirmed: true },
       { label: "Sala y comedor", icon: "house", confirmed: true },
       { label: "Cocina", icon: "cooking-pot", confirmed: true },
@@ -146,7 +146,7 @@ export const properties = z.array(propertySchema).parse([
     kitchenInventory: [],
     videos: [],
     reviews: [],
-    whatsappMessage: "Hola, vi Casa Palac frente a playa en la página de Nico Experience y me gustaría consultar disponibilidad.",
+    whatsappMessage: "Hola, vi Casa Palac en la página de Nico Experience y me gustaría consultar disponibilidad.",
     featured: true,
     active: true,
   },

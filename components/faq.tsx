@@ -7,7 +7,7 @@ import { motion } from "framer-motion"
 const accordionItems = [
   {
     title: "¿Cómo consulto disponibilidad?",
-    content: <div className="text-muted-foreground">Abre la ficha del alojamiento y usa el botón de consulta. El mensaje incluirá automáticamente el nombre de Casa Palac frente a playa.</div>,
+    content: <div className="text-muted-foreground">Abre la ficha del alojamiento y usa el botón de consulta. El mensaje incluirá automáticamente el nombre de Casa Palac.</div>,
   },
   {
     title: "¿Cómo puedo reservar?",

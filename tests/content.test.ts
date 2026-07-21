@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest"
 import { activeProperties, getProperty, properties } from "../content/properties"
 import { buildWhatsAppUrl, normalizeWhatsAppNumber } from "../lib/whatsapp"
 
-const slug = "casa-palac-frente-a-playa"
+const slug = "casa-palac"
 
 describe("contenido de alojamientos", () => {
   it("publica únicamente propiedades activas", () => {
@@ -10,8 +10,12 @@ describe("contenido de alojamientos", () => {
     expect(activeProperties.length).toBe(properties.filter((property) => property.active).length)
   })
 
-  it("resuelve Casa Palac con el nombre y slug correctos", () => {
-    expect(getProperty(slug)?.name).toBe("Casa Palac frente a playa")
+  it("publica Casa Palac con identidad y descriptor separados", () => {
+    const property = getProperty(slug)!
+    expect(property.name).toBe("Casa Palac")
+    expect(property.locationLabel).toBe("Frente a la playa")
+    expect(property.whatsappMessage).toContain("Casa Palac")
+    expect(property.whatsappMessage).not.toContain("Casa Palac frente a playa")
   })
 
   it("no resuelve un slug inexistente", () => {
@@ -47,7 +51,7 @@ describe("enlaces de WhatsApp", () => {
   it("incluye el nombre correcto en el mensaje codificado", () => {
     const message = getProperty(slug)!.whatsappMessage
     const url = buildWhatsAppUrl(message, "+504 9999-9999")!
-    expect(decodeURIComponent(url)).toContain("Casa Palac frente a playa")
+    expect(decodeURIComponent(url)).toContain("Casa Palac")
     expect(url.startsWith("https://wa.me/50499999999?text=")).toBe(true)
   })
 

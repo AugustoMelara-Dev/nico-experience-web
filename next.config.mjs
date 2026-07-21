@@ -3,7 +3,8 @@ const nextConfig = {
   async redirects() {
     return [
       { source: "/cabanas", destination: "/alojamientos", permanent: true },
-      { source: "/cabanas/casa-vip", destination: "/alojamientos/casa-palac-frente-a-playa", permanent: true },
+      { source: "/alojamientos/casa-palac-frente-a-playa", destination: "/alojamientos/casa-palac", permanent: true },
+      { source: "/cabanas/casa-vip", destination: "/alojamientos/casa-palac", permanent: true },
       { source: "/nosotros", destination: "/", permanent: true },
     ];
   },

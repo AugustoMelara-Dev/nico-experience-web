@@ -12,7 +12,7 @@ import ThemeSwitcher from "@/components/theme-switcher"
 const menuItems = [
   { name: "Inicio", href: "/" },
   { name: "Alojamientos", href: "/alojamientos" },
-  { name: "Casa Palac", href: "/alojamientos/casa-palac-frente-a-playa" },
+  { name: "Casa Palac", href: "/alojamientos/casa-palac" },
   { name: "Preguntas", href: "/#preguntas" },
   { name: "Contacto", href: "/contacto" },
 ]
@@ -54,10 +54,10 @@ export default function NavBar() {
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-80">
                 <DropdownMenuItem asChild>
-                  <Link href="/alojamientos/casa-palac-frente-a-playa" className="items-start">
+                  <Link href="/alojamientos/casa-palac" className="items-start">
                     <House className="mr-2 mt-0.5 h-4 w-4" />
                     <div>
-                      <div className="font-semibold">Casa Palac frente a playa</div>
+                      <div className="font-semibold">Casa Palac</div>
                       <div className="text-sm text-muted-foreground">Consulta su álbum, espacios y ubicación oficial.</div>
                     </div>
                   </Link>
