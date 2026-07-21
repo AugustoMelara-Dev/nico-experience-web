@@ -11,8 +11,8 @@ import ThemeSwitcher from "@/components/theme-switcher"
 
 const menuItems = [
   { name: "Inicio", href: "/" },
+  { name: "Servicios", href: "/#servicios" },
   { name: "Alojamientos", href: "/alojamientos" },
-  { name: "Casa Palac", href: "/alojamientos/casa-palac" },
   { name: "Preguntas", href: "/#preguntas" },
   { name: "Contacto", href: "/contacto" },
 ]
@@ -46,11 +46,12 @@ export default function NavBar() {
           </div>
           <div className="hidden sm:flex items-center space-x-8">
             <Link href="/" className="font-light tracking-tighter text-2xl">Nico Experience</Link>
+            <Button asChild variant="ghost" size="sm"><Link href="/#servicios">Servicios</Link></Button>
             <Button asChild variant="ghost" size="sm"><Link href="/alojamientos">Alojamientos</Link></Button>
             <Button asChild variant="ghost" size="sm"><Link href="/#preguntas">Preguntas</Link></Button>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="sm">Hospedajes<ChevronDownIcon className="ml-1 h-4 w-4" /></Button>
+                <Button variant="ghost" size="sm">Casa Palac<ChevronDownIcon className="ml-1 h-4 w-4" /></Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-80">
                 <DropdownMenuItem asChild>
@@ -58,7 +59,7 @@ export default function NavBar() {
                     <House className="mr-2 mt-0.5 h-4 w-4" />
                     <div>
                       <div className="font-semibold">Casa Palac</div>
-                      <div className="text-sm text-muted-foreground">Consulta su álbum, espacios y ubicación oficial.</div>
+                      <div className="text-sm text-muted-foreground">Una casa ubicada frente a la playa.</div>
                     </div>
                   </Link>
                 </DropdownMenuItem>

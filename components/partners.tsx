@@ -1,17 +1,17 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { BedDouble, CookingPot, House, MapPin, Waves, Armchair } from "lucide-react"
+import { BedDouble, BriefcaseBusiness, FileText, MonitorSmartphone, Plane } from "lucide-react"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
+import { services, type Service } from "@/content/services"
 
-const features = [
-  { name: "Frente a playa", icon: MapPin },
-  { name: "Piscina", icon: Waves },
-  { name: "Áreas de descanso", icon: Armchair },
-  { name: "Cocina", icon: CookingPot },
-  { name: "Habitaciones", icon: BedDouble },
-  { name: "Sala y comedor", icon: House },
-]
+const icons: Record<Service["icon"], typeof Plane> = {
+  plane: Plane,
+  bed: BedDouble,
+  "file-text": FileText,
+  briefcase: BriefcaseBusiness,
+  "monitor-smartphone": MonitorSmartphone,
+}
 
 export default function Partners() {
   return (
@@ -24,13 +24,14 @@ export default function Partners() {
         className="flex flex-col gap-3"
       >
         <h2 className="text-xl font-semibold sm:text-2xl bg-linear-to-b from-foreground to-muted-foreground text-transparent bg-clip-text">
-          Lo que encontrarás
+          ¿Cómo podemos ayudarte?
         </h2>
       </motion.div>
-      <div className="w-full grid grid-cols-3 sm:grid-cols-6 grid-rows-3 sm:grid-rows-1 gap-5 place-items-center">
+      <div className="grid w-full grid-cols-2 place-items-center gap-8 sm:grid-cols-5">
         <TooltipProvider>
-          {features.map((feature, index) => (
-            <Tooltip key={feature.name}>
+          {services.map((service, index) => {
+            const Icon = icons[service.icon]
+            return <Tooltip key={service.slug}>
               <TooltipTrigger asChild>
                 <div className="shrink-0">
                   <motion.div
@@ -39,13 +40,13 @@ export default function Partners() {
                     viewport={{ once: true }}
                     transition={{ duration: 1, delay: index * 0.1, type: "spring", bounce: 0 }}
                   >
-                    <feature.icon className="size-8" aria-hidden="true" />
+                    <Icon className="size-8" aria-hidden="true" />
                   </motion.div>
                 </div>
               </TooltipTrigger>
-              <TooltipContent>{feature.name}</TooltipContent>
+              <TooltipContent>{service.shortLabel}</TooltipContent>
             </Tooltip>
-          ))}
+          })}
         </TooltipProvider>
       </div>
     </section>

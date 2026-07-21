@@ -6,24 +6,28 @@ import { motion } from "framer-motion"
 
 const accordionItems = [
   {
-    title: "¿Cómo consulto disponibilidad?",
-    content: <div className="text-muted-foreground">Abre la ficha del alojamiento y usa el botón de consulta. El mensaje incluirá automáticamente el nombre de Casa Palac.</div>,
+    title: "¿Cómo puedo solicitar ayuda?",
+    content: <div className="text-muted-foreground">Selecciona el servicio que necesitas, cuéntanos brevemente tu caso y continúa la conversación por WhatsApp. El mensaje se prepara con la información que tú proporcionas.</div>,
   },
   {
-    title: "¿Cómo puedo reservar?",
-    content: <div className="text-muted-foreground">Primero consulta disponibilidad con Nico Experience. Las condiciones de reserva se confirman directamente antes de realizar cualquier pago.</div>,
+    title: "¿Qué servicios ofrece Nico Experience?",
+    content: <div className="text-muted-foreground">Brindamos atención personalizada para viajes, hospedaje, trámites, gestiones y soluciones digitales, adaptándonos a las necesidades de cada cliente.</div>,
+  },
+  {
+    title: "¿Cómo consulto un alojamiento?",
+    content: <div className="text-muted-foreground">Abre la ficha del alojamiento o selecciona Hospedaje en el formulario. Puedes indicar fecha aproximada, cantidad de personas y tu consulta antes de continuar por WhatsApp.</div>,
   },
   {
     title: "¿Dónde se encuentra Casa Palac?",
     content: <div className="text-muted-foreground">Puedes abrir la ubicación oficial en <Link href="https://maps.app.goo.gl/BhDjLciEvjhp8pBN8?g_st=iw" target="_blank" rel="noopener noreferrer" className="text-primary underline">Google Maps</Link>.</div>,
   },
   {
-    title: "¿Cuáles son las reglas de ingreso?",
-    content: <div className="text-muted-foreground">Los horarios, requisitos y reglas de ingreso están pendientes de confirmación. Solicítalos al consultar para recibir información vigente.</div>,
+    title: "¿Dónde atiende Nico Experience?",
+    content: <div className="text-muted-foreground">Nico Experience está ubicada en Tocoa, Colón. La atención y el alcance de cada solicitud se confirman directamente según el servicio.</div>,
   },
   {
-    title: "¿Cuál es la política de cambios o cancelaciones?",
-    content: <div className="text-muted-foreground">Esta política aún no se ha publicado porque falta confirmación del negocio. Se informará antes de completar una reserva.</div>,
+    title: "¿Qué sucede después de enviar la consulta?",
+    content: <div className="text-muted-foreground">WhatsApp se abrirá con un mensaje preparado. Revísalo, envíalo y recibirás atención personalizada para definir los siguientes pasos.</div>,
   },
 ]
 
@@ -39,7 +43,7 @@ export default function Faq() {
     >
       <div className="flex flex-col gap-3 justify-center items-center">
         <h4 className="text-2xl font-bold sm:text-3xl bg-linear-to-b from-foreground to-muted-foreground text-transparent bg-clip-text">Preguntas frecuentes</h4>
-        <p className="max-w-xl text-muted-foreground text-center">Información útil para planear tu consulta y estadía.</p>
+        <p className="max-w-xl text-muted-foreground text-center">Información útil antes de contarnos qué necesitas.</p>
       </div>
       <div className="flex w-full max-w-lg">
         <Accordion type="multiple" className="w-full">

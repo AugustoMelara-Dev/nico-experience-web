@@ -1,14 +1,10 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { WhatsAppLink } from "@/components/whatsapp-link"
-import { getProperty } from "@/content/properties"
 import { motion } from "framer-motion"
 import Link from "next/link"
 
 export default function Hero() {
-  const property = getProperty("casa-palac")!
-
   return (
     <div className="relative justify-center items-center">
       <section className="max-w-(--breakpoint-xl) mx-auto px-4 py-28 gap-12 md:px-8 flex flex-col justify-center items-center">
@@ -19,22 +15,25 @@ export default function Hero() {
           className="flex flex-col justify-center items-center space-y-5 max-w-4xl mx-auto text-center"
         >
           <span className="w-fit h-full text-sm bg-card px-2 py-1 border border-border rounded-full">
-            Hospedajes para disfrutar Honduras
+            Turismo y soluciones integrales en Tocoa, Colón
           </span>
           <h1 className="text-4xl font-medium tracking-tighter mx-auto md:text-6xl text-pretty bg-linear-to-b from-sky-800 dark:from-sky-100 to-foreground dark:to-foreground bg-clip-text text-transparent">
-            Encuentra tu próxima estadía con Nico Experience
+            Encuentra la solución que necesitas con Nico Experience
           </h1>
           <p className="max-w-2xl text-lg mx-auto text-muted-foreground text-balance">
-            Descubre alojamientos para descansar, compartir y disfrutar momentos especiales frente al mar.
+            Viajes, hospedaje, trámites, gestiones y soluciones digitales con
+            atención personalizada, práctica y confiable.
           </p>
           <motion.div
             whileHover={{ scale: 1.05 }}
             className="items-center justify-center gap-x-3 space-y-3 sm:flex sm:space-y-0"
           >
             <Button asChild className="shadow-lg">
-              <Link href="/alojamientos">Ver alojamientos</Link>
+              <Link href="/contacto">Cuéntanos qué necesitas</Link>
             </Button>
-            <WhatsAppLink message={property.whatsappMessage} variant="outline" />
+            <Button asChild variant="outline">
+              <Link href="/alojamientos">Explorar alojamientos</Link>
+            </Button>
           </motion.div>
         </motion.div>
       </section>

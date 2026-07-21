@@ -21,10 +21,10 @@ export default function Pricing() {
         className="mb-12 flex flex-col gap-3 text-center sm:mb-16"
       >
         <h2 className="text-xl font-semibold sm:text-2xl bg-linear-to-b from-foreground to-muted-foreground text-transparent bg-clip-text">
-          Alojamientos destacados
+          Una experiencia para compartir
         </h2>
         <p className="mx-auto max-w-xl text-muted-foreground text-center">
-          Conoce el alojamiento disponible y consulta sus detalles directamente con Nico Experience.
+          Descubre Casa Palac, explora sus espacios reales y consulta directamente con Nico Experience.
         </p>
       </motion.div>
 
@@ -41,7 +41,7 @@ export default function Pricing() {
             <Card className="relative h-full rounded-2xl border-2 border-primary bg-primary/5 shadow-lg">
               <div className="absolute -top-4 left-1/2 -translate-x-1/2">
                 <span className="whitespace-nowrap rounded-full border-2 border-primary bg-card px-3 py-1 text-xs font-medium sm:px-4 sm:text-sm">
-                  Frente a playa
+                  Frente a la playa
                 </span>
               </div>
               <CardContent className="p-4 pt-6 sm:p-6 sm:pt-8">
