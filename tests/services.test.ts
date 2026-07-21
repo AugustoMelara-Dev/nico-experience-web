@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest"
 import { services } from "../content/services"
 import { siteConfig } from "../config/site"
+import { verifiedTestimonials } from "../content/testimonials"
 
 describe("servicios de Nico Experience", () => {
   it("publica las cinco líneas confirmadas", () => {
@@ -26,5 +27,9 @@ describe("servicios de Nico Experience", () => {
     expect(siteConfig.description).toContain("trámites")
     expect(siteConfig.description).toContain("soluciones digitales")
     expect(siteConfig.description).toContain("Tocoa, Colón")
+  })
+
+  it("no publica testimonios sin contenido real verificado", () => {
+    expect(verifiedTestimonials).toEqual([])
   })
 })
