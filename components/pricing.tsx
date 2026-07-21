@@ -21,14 +21,14 @@ export default function Pricing() {
         className="mb-12 flex flex-col gap-3 text-center sm:mb-16"
       >
         <h2 className="text-xl font-semibold sm:text-2xl bg-linear-to-b from-foreground to-muted-foreground text-transparent bg-clip-text">
-          Una experiencia para compartir
+          Alojamientos para vivir la experiencia
         </h2>
         <p className="mx-auto max-w-xl text-muted-foreground text-center">
-          Descubre Casa Palac, explora sus espacios reales y consulta directamente con Nico Experience.
+          Explora fotografías reales, conoce sus espacios y consulta directamente con Nico Experience.
         </p>
       </motion.div>
 
-      <div className="mx-auto grid max-w-5xl gap-4 sm:gap-6 md:grid-cols-3 md:gap-8">
+      <div className="mx-auto grid max-w-7xl grid-cols-[repeat(auto-fit,minmax(min(100%,20rem),1fr))] gap-4 sm:gap-6 md:gap-8">
         {featuredProperties.map((property, index) => (
           <motion.div
             key={property.slug}
@@ -36,12 +36,12 @@ export default function Pricing() {
             whileInView={{ y: 0, opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: index * 0.1 }}
-            className="relative md:col-start-2 md:scale-[1.03]"
+            className="relative w-full max-w-md justify-self-center"
           >
             <Card className="relative h-full rounded-2xl border-2 border-primary bg-primary/5 shadow-lg">
               <div className="absolute -top-4 left-1/2 -translate-x-1/2">
                 <span className="whitespace-nowrap rounded-full border-2 border-primary bg-card px-3 py-1 text-xs font-medium sm:px-4 sm:text-sm">
-                  Frente a la playa
+                  {property.locationLabel}
                 </span>
               </div>
               <CardContent className="p-4 pt-6 sm:p-6 sm:pt-8">
