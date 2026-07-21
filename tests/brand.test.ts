@@ -44,10 +44,31 @@ describe("identidad de Nico Experience", () => {
       join(process.cwd(), "components/footer.tsx"),
       "utf8",
     )
+    const brandLogo = readFileSync(
+      join(process.cwd(), "components/brand-logo.tsx"),
+      "utf8",
+    )
 
     expect(globals).toContain("--brand-navy: #061e68")
     expect(globals).toContain("--brand-gold: #d6993a")
     expect(navbar).toContain("<BrandLogo")
     expect(footer).toContain("<BrandLogo")
+    expect(brandConfig.logoCompactWeb).toBe(
+      "/brand/nico-experience-wordmark-transparent.webp",
+    )
+    expect(brandLogo).toContain("dark:invert")
+    expect(brandLogo).toContain("bg-white")
+  })
+
+  it("presenta una imagen editorial y las dos rutas principales", () => {
+    const hero = readFileSync(
+      join(process.cwd(), "components/hero.tsx"),
+      "utf8",
+    )
+
+    expect(hero).toContain("brandConfig.heroImage")
+    expect(hero).toContain('href="/contacto"')
+    expect(hero).toContain('href="/alojamientos"')
+    expect(hero).toContain("sizes=")
   })
 })

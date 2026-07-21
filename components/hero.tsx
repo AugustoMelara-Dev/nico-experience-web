@@ -1,39 +1,70 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
+import { Card, CardContent } from "@/components/ui/card"
+import { brandConfig } from "@/config/brand"
 import { motion } from "framer-motion"
+import Image from "next/image"
 import Link from "next/link"
 
 export default function Hero() {
   return (
-    <div className="relative justify-center items-center">
-      <section className="max-w-(--breakpoint-xl) mx-auto px-4 py-28 gap-12 md:px-8 flex flex-col justify-center items-center">
+    <div className="relative overflow-hidden">
+      <section className="mx-auto flex max-w-(--breakpoint-xl) items-center px-4 py-20 md:px-8 md:py-28">
         <motion.div
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.6, type: "spring", bounce: 0 }}
-          className="flex flex-col justify-center items-center space-y-5 max-w-4xl mx-auto text-center"
+          className="grid w-full items-center gap-10 lg:grid-cols-[1.05fr_.95fr] lg:gap-14"
         >
-          <span className="w-fit h-full text-sm bg-card px-2 py-1 border border-border rounded-full">
-            Turismo y soluciones integrales en Tocoa, Colón
-          </span>
-          <h1 className="text-4xl font-medium tracking-tighter mx-auto md:text-6xl text-pretty bg-linear-to-b from-sky-800 dark:from-sky-100 to-foreground dark:to-foreground bg-clip-text text-transparent">
-            Encuentra la solución que necesitas con Nico Experience
-          </h1>
-          <p className="max-w-2xl text-lg mx-auto text-muted-foreground text-balance">
-            Viajes, hospedaje, trámites, gestiones y soluciones digitales con
-            atención personalizada, práctica y confiable.
-          </p>
+          <div className="flex flex-col items-center space-y-5 text-center lg:items-start lg:text-left">
+            <span className="h-full w-fit rounded-full border border-border bg-card px-2 py-1 text-sm">
+              Tu aliado en Tocoa, Colón
+            </span>
+            <h1 className="max-w-3xl text-pretty bg-linear-to-b from-primary to-foreground bg-clip-text text-4xl font-medium tracking-tighter text-transparent md:text-6xl">
+              Viajes, hospedaje y soluciones en un solo lugar
+            </h1>
+            <p className="max-w-2xl text-balance text-lg text-muted-foreground">
+              Atención personalizada para organizar viajes, encontrar dónde
+              hospedarte, resolver trámites, gestionar necesidades y avanzar
+              con soluciones digitales.
+            </p>
+            <motion.div
+              whileHover={{ scale: 1.03 }}
+              className="items-center justify-center gap-x-3 space-y-3 sm:flex sm:space-y-0 lg:justify-start"
+            >
+              <Button asChild className="shadow-lg">
+                <Link href="/contacto">Cuéntanos qué necesitas</Link>
+              </Button>
+              <Button asChild variant="outline">
+                <Link href="/alojamientos">Explorar alojamientos</Link>
+              </Button>
+            </motion.div>
+            <p className="text-sm font-medium text-primary">
+              {brandConfig.tagline}
+            </p>
+          </div>
           <motion.div
-            whileHover={{ scale: 1.05 }}
-            className="items-center justify-center gap-x-3 space-y-3 sm:flex sm:space-y-0"
+            initial={{ opacity: 0, scale: 0.98 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.7, delay: 0.15, ease: "easeOut" }}
+            className="w-full"
           >
-            <Button asChild className="shadow-lg">
-              <Link href="/contacto">Cuéntanos qué necesitas</Link>
-            </Button>
-            <Button asChild variant="outline">
-              <Link href="/alojamientos">Explorar alojamientos</Link>
-            </Button>
+            <Card className="overflow-hidden rounded-2xl">
+              <CardContent className="p-3 sm:p-4">
+                <div className="relative aspect-4/3 overflow-hidden rounded-xl border border-border">
+                  <Image
+                    src={brandConfig.heroImage}
+                    alt="Escena editorial de planificación de viajes y atención personalizada"
+                    fill
+                    priority
+                    quality={90}
+                    sizes="(min-width: 1024px) 44vw, 92vw"
+                    className="object-cover"
+                  />
+                </div>
+              </CardContent>
+            </Card>
           </motion.div>
         </motion.div>
       </section>
@@ -41,10 +72,10 @@ export default function Hero() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 2, delay: 0.5, type: "spring", bounce: 0 }}
-        className="w-full h-full absolute -top-32 flex justify-end items-center pointer-events-none"
+        className="pointer-events-none absolute -top-32 flex h-full w-full items-center justify-end"
       >
-        <div className="w-3/4 flex justify-center items-center">
-          <div className="w-12 h-150 bg-light blur-[70px] rounded-3xl max-sm:rotate-15 sm:rotate-35 will-change-transform" />
+        <div className="flex w-3/4 items-center justify-center">
+          <div className="h-150 w-12 rounded-3xl bg-light blur-[70px] will-change-transform max-sm:rotate-15 sm:rotate-35" />
         </div>
       </motion.div>
     </div>
