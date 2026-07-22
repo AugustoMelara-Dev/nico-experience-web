@@ -94,7 +94,7 @@ export function PropertyPdfDocument({
           </View>
         ) : null}
 
-        <View style={pdfStyles.section}>
+        <View style={[pdfStyles.section, { marginBottom: 8 }]} break>
           <Text style={pdfStyles.sectionTitle}>Una mirada a sus espacios</Text>
           <View style={pdfStyles.gallery}>
             {images.map((image) => (
