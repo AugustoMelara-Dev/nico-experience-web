@@ -84,8 +84,34 @@ def save_pdf_jpeg(
     print(f"{source.name} -> {destination.relative_to(ROOT)}")
 
 
-def save_compact_wordmark(source: Path, destination: Path) -> None:
-    destination.parent.mkdir(parents=True, exist_ok=True)
+def white_to_transparent(image: Image.Image) -> Image.Image:
+    rgba = image.convert("RGBA")
+    output: list[tuple[int, int, int, int]] = []
+    for red, green, blue, _alpha in rgba.getdata():
+        distance = ((255 - red) ** 2 + (255 - green) ** 2 + (255 - blue) ** 2) ** 0.5
+        alpha = round(max(0, min(255, (distance - 8) * 255 / 142)))
+        if alpha == 0:
+            output.append((0, 0, 0, 0))
+            continue
+        ratio = alpha / 255
+        output.append(
+            (
+                max(0, min(255, round((red - 255 * (1 - ratio)) / ratio))),
+                max(0, min(255, round((green - 255 * (1 - ratio)) / ratio))),
+                max(0, min(255, round((blue - 255 * (1 - ratio)) / ratio))),
+                alpha,
+            )
+        )
+    rgba.putdata(output)
+    return rgba
+
+
+def save_compact_wordmark(
+    source: Path,
+    opaque_destination: Path,
+    transparent_destination: Path,
+) -> None:
+    opaque_destination.parent.mkdir(parents=True, exist_ok=True)
     image = normalized_rgb(source)
     width, height = image.size
     wordmark = image.crop(
@@ -96,8 +122,15 @@ def save_compact_wordmark(source: Path, destination: Path) -> None:
             round(height * 0.69),
         )
     )
-    wordmark.save(destination, "WEBP", quality=92, method=6)
-    print(f"{source.name} -> {destination.relative_to(ROOT)}")
+    wordmark.save(opaque_destination, "WEBP", quality=92, method=6)
+    white_to_transparent(wordmark).save(
+        transparent_destination,
+        "WEBP",
+        quality=92,
+        method=6,
+    )
+    print(f"{source.name} -> {opaque_destination.relative_to(ROOT)}")
+    print(f"{source.name} -> {transparent_destination.relative_to(ROOT)}")
 
 
 def property_sources() -> dict[str, Path]:
@@ -124,6 +157,10 @@ def main() -> None:
     save_compact_wordmark(
         BRAND_SOURCE,
         ROOT / "public" / "brand" / "nico-experience-wordmark.webp",
+        ROOT
+        / "public"
+        / "brand"
+        / "nico-experience-wordmark-transparent.webp",
     )
     save_web(
         HERO_SOURCE,
