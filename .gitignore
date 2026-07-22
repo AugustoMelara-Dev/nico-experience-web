@@ -38,6 +38,7 @@ yarn-error.log*
 /output/pdf/
 /tmp/chrome-qa-*/
 /tmp/qa.cjs
+/tmp/imagegen/
 /output/playwright/
 
 # typescript

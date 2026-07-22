@@ -17,5 +17,8 @@ describe("shell editorial", () => {
     const footer = source("components/footer.tsx")
     expect(footer).toContain("businessConfig.locationLabel")
     expect(footer).toContain("businessConfig.mapsUrl")
+    expect(footer).toContain("items-center text-center")
+    expect(footer).toContain("md:grid-cols-2")
+    expect(footer).not.toContain("lg:grid-cols-[1.35fr_.65fr_1fr]")
   })
 })

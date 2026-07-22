@@ -7,7 +7,7 @@ export const brandConfig = {
     gold: "#D6993A",
     goldLight: "#E4C07C",
   },
-  logoWeb: "/brand/nico-experience-logo.webp",
+  logoWeb: "/brand/nico-experience-lockup-transparent.webp",
   logoCompactWeb: "/brand/nico-experience-wordmark-transparent.webp",
   logoPdf: "/brand/nico-experience-logo.jpg",
   heroImage: "/images/hero/nico-experience-neutral.webp",

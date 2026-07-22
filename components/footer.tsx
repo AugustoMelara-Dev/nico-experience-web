@@ -29,36 +29,37 @@ export default function Footer() {
 
   return (
     <footer className="w-full border-t bg-card/35">
-      <div className="mx-auto max-w-6xl px-4 py-12 sm:py-16">
+      <div className="mx-auto max-w-6xl px-4 py-16 sm:py-20">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.55 }}
-          className="flex flex-col gap-10"
+          className="flex flex-col gap-10 sm:gap-12"
         >
-          <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.35fr_.65fr_1fr]">
-            <div className="flex flex-col items-start gap-4">
-              <Link
-                href="/"
-                className="inline-block transition-opacity hover:opacity-80"
-                aria-label="Nico Experience, inicio"
-              >
-                <BrandLogo />
-              </Link>
-              <p className="max-w-md text-sm leading-7 text-muted-foreground">
-                Turismo y soluciones integrales con atención personalizada
-                para viajes, hospedaje, trámites, gestiones y soluciones
-                digitales.
-              </p>
-              <p className="text-sm font-medium text-primary">
-                {brandConfig.tagline}
-              </p>
-            </div>
+          <div className="mx-auto flex max-w-2xl flex-col items-center text-center gap-5">
+            <Link
+              href="/"
+              className="inline-flex transition-opacity hover:opacity-80"
+              aria-label="Nico Experience, inicio"
+            >
+              <BrandLogo />
+            </Link>
+            <p className="max-w-xl text-sm leading-7 text-muted-foreground sm:text-base">
+              Turismo y soluciones integrales con atención personalizada para
+              viajes, hospedaje, trámites, gestiones y soluciones digitales.
+            </p>
+            <p className="text-sm font-medium text-primary">
+              {brandConfig.tagline}
+            </p>
+          </div>
 
-            <div className="flex flex-col gap-3">
+          <Separator />
+
+          <div className="mx-auto grid w-full max-w-3xl gap-10 text-center md:grid-cols-2 md:text-left">
+            <div className="flex flex-col items-center gap-4 md:items-start">
               <h2 className="text-sm font-semibold">Explorar</h2>
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-wrap justify-center gap-x-5 gap-y-2 md:justify-start">
                 {footerLinks.map((item) => (
                   <Link
                     key={item.name}
@@ -71,13 +72,13 @@ export default function Footer() {
               </div>
             </div>
 
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col items-center gap-4 md:items-start">
               <h2 className="text-sm font-semibold">Contacto y ubicación</h2>
               <Link
                 href={businessConfig.mapsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-start gap-3 text-sm text-muted-foreground transition-colors hover:text-foreground"
+                className="flex items-start justify-center gap-3 text-sm text-muted-foreground transition-colors hover:text-foreground md:justify-start"
               >
                 <MapPin className="mt-0.5 size-4 shrink-0" aria-hidden="true" />
                 <span>{businessConfig.locationLabel}</span>
@@ -100,11 +101,8 @@ export default function Footer() {
             </div>
           </div>
 
-          <Separator />
-
-          <div className="flex flex-col justify-between gap-2 text-sm text-muted-foreground sm:flex-row">
+          <div className="text-center text-sm text-muted-foreground">
             <span>© {year} Nico Experience. Todos los derechos reservados.</span>
-            <span className="font-medium">{businessConfig.locationLabel}</span>
           </div>
         </motion.div>
       </div>

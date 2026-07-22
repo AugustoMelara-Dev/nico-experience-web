@@ -56,8 +56,11 @@ describe("identidad de Nico Experience", () => {
     expect(brandConfig.logoCompactWeb).toBe(
       "/brand/nico-experience-wordmark-transparent.webp",
     )
+    expect(brandConfig.logoWeb).toBe(
+      "/brand/nico-experience-lockup-transparent.webp",
+    )
     expect(brandLogo).toContain("dark:invert")
-    expect(brandLogo).toContain("bg-white")
+    expect(brandLogo).not.toContain("border border-border bg-white")
   })
 
   it("presenta una imagen editorial y las dos rutas principales", () => {

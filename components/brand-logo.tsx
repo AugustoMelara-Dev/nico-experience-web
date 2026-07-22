@@ -16,21 +16,20 @@ export function BrandLogo({
   return (
     <span
       className={cn(
-        "inline-flex items-center",
-        !compact && "rounded-xl border border-border bg-white p-2",
+        "inline-flex items-center justify-center",
         className,
       )}
     >
       <Image
         src={compact ? brandConfig.logoCompactWeb : brandConfig.logoWeb}
         alt="Nico Experience"
-        width={compact ? 178 : 240}
-        height={compact ? 46 : 135}
+        width={compact ? 178 : 320}
+        height={compact ? 46 : 180}
         className={cn(
           "h-auto w-auto object-contain",
           compact
             ? "max-h-8 max-w-38 dark:brightness-0 dark:invert sm:max-w-44"
-            : "max-w-56",
+            : "w-full max-w-72 dark:brightness-0 dark:invert",
         )}
         priority={priority}
       />
