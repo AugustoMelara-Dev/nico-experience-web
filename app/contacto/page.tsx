@@ -38,7 +38,7 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
 
   return (
     <main id="contenido">
-      <section className="mx-auto grid max-w-7xl gap-12 px-4 py-20 md:px-8 md:py-28 lg:grid-cols-[.72fr_1.28fr] lg:items-start">
+      <section className="mx-auto grid max-w-7xl gap-12 px-4 py-20 md:px-8 md:py-28 lg:grid-cols-[.8fr_1.2fr] lg:items-start lg:gap-16">
         <div className="flex flex-col gap-5 lg:sticky lg:top-28">
           <span className="text-sm font-medium text-primary">Contacto</span>
           <h1 className="max-w-xl text-4xl font-medium tracking-tighter sm:text-6xl">

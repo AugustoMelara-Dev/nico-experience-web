@@ -8,9 +8,11 @@ const source = (path: string) =>
 describe("shell editorial", () => {
   it("usa Sheet para el menú móvil y la ubicación del negocio", () => {
     const navbar = source("components/navbar.tsx")
+    const providers = source("app/providers.tsx")
     expect(navbar).toContain('from "@/components/ui/sheet"')
     expect(navbar).toContain("businessConfig.mapsUrl")
     expect(navbar).not.toContain("AnimatePresence")
+    expect(providers).toContain('defaultTheme="light"')
   })
 
   it("muestra la ubicación confirmada en el footer", () => {

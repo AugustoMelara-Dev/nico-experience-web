@@ -96,7 +96,7 @@ export default async function PropertyDetailPage({ params }: PageProps) {
       />
       <PropertyHero property={property} />
 
-      <section className="mx-auto grid max-w-6xl gap-12 px-4 py-20 md:px-6 md:py-28 lg:grid-cols-[.72fr_1.28fr]">
+      <section className="mx-auto grid max-w-7xl gap-12 px-4 py-20 md:px-8 md:py-28 lg:grid-cols-[.72fr_1.28fr]">
         <div className="flex flex-col gap-4">
           <span className="text-sm font-medium text-primary">
             La experiencia
@@ -130,7 +130,7 @@ export default async function PropertyDetailPage({ params }: PageProps) {
 
       <section
         aria-labelledby="album-title"
-        className="mx-auto max-w-7xl px-4 py-20 md:px-6 md:py-28"
+        className="mx-auto max-w-7xl px-4 py-20 md:px-8 md:py-28"
       >
         <div className="mb-10 flex max-w-3xl flex-col gap-3">
           <span className="text-sm font-medium text-primary">
@@ -150,7 +150,7 @@ export default async function PropertyDetailPage({ params }: PageProps) {
         <GalleryLightbox images={images} title={property.name} />
       </section>
 
-      <section className="mx-auto max-w-6xl px-4 py-20 md:px-6 md:py-28">
+      <section className="mx-auto max-w-7xl px-4 py-20 md:px-8 md:py-28">
         <div className="grid gap-10 border-y py-10 md:grid-cols-2 md:gap-0 md:divide-x md:divide-border">
           <div className="flex flex-col gap-4 md:pr-10">
             <h2 className="text-2xl font-semibold tracking-tight">
@@ -182,7 +182,7 @@ export default async function PropertyDetailPage({ params }: PageProps) {
 
       <PropertyVideos videos={property.videos} />
 
-      <section className="mx-auto max-w-6xl px-4 py-20 md:px-6 md:py-28">
+      <section className="mx-auto max-w-7xl px-4 py-20 md:px-8 md:py-28">
         <Separator className="mb-10" />
         <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-end">
           <div className="flex max-w-xl flex-col gap-3">

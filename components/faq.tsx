@@ -39,13 +39,14 @@ export default function Faq() {
       whileInView={{ y: 0, opacity: 1 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5, delay: 0.5, type: "spring", bounce: 0 }}
-      className="relative w-full max-w-(--breakpoint-xl) mx-auto px-4 py-28 gap-5 md:px-8 flex flex-col justify-center items-center"
+      className="relative mx-auto flex w-full max-w-7xl flex-col items-center justify-center gap-10 px-4 py-20 md:px-8 md:py-28"
     >
-      <div className="flex flex-col gap-3 justify-center items-center">
-        <h4 className="text-2xl font-bold sm:text-3xl bg-linear-to-b from-foreground to-muted-foreground text-transparent bg-clip-text">Preguntas frecuentes</h4>
+      <div className="flex max-w-2xl flex-col items-center justify-center gap-3 text-center">
+        <span className="text-sm font-medium text-primary">Antes de consultar</span>
+        <h2 className="text-3xl font-medium tracking-tighter sm:text-4xl">Preguntas frecuentes</h2>
         <p className="max-w-xl text-muted-foreground text-center">Información útil antes de contarnos qué necesitas.</p>
       </div>
-      <div className="flex w-full max-w-lg">
+      <div className="flex w-full max-w-2xl">
         <Accordion type="multiple" className="w-full">
           {accordionItems.map((item, index) => (
             <AccordionItem key={item.title} value={`item-${index}`} className="text-muted-foreground">

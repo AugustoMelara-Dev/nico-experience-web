@@ -88,8 +88,8 @@ export default function Pricing() {
       id="alojamientos"
       className="mx-auto w-full max-w-7xl px-4 py-20 md:px-8 md:py-28"
     >
-      <div className="mb-12 flex flex-col gap-4 md:mb-16 md:flex-row md:items-end md:justify-between">
-        <div className="flex max-w-2xl flex-col gap-3">
+      <div className="mx-auto mb-12 flex max-w-3xl flex-col items-center gap-4 text-center md:mb-16">
+        <div className="flex max-w-2xl flex-col items-center gap-3">
           <span className="text-sm font-medium text-primary">
             Hospedaje seleccionado
           </span>

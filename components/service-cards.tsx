@@ -30,8 +30,8 @@ export default function ServiceCards() {
       id="servicios"
       className="mx-auto w-full max-w-7xl px-4 py-20 md:px-8 md:py-28"
     >
-      <div className="mb-12 grid gap-5 md:mb-16 md:grid-cols-[.72fr_1.28fr] md:items-end">
-        <div className="flex flex-col items-start gap-3">
+      <div className="mx-auto mb-12 flex max-w-3xl flex-col items-center text-center gap-4 md:mb-16">
+        <div className="flex flex-col items-center gap-3">
           <span className="text-sm font-medium text-primary">
             Todo en un solo lugar
           </span>
@@ -39,7 +39,7 @@ export default function ServiceCards() {
             Soluciones pensadas alrededor de ti
           </h2>
         </div>
-        <p className="max-w-2xl text-base leading-7 text-muted-foreground md:justify-self-end">
+        <p className="max-w-2xl text-base leading-7 text-muted-foreground">
           Desde organizar un viaje hasta resolver una gestión o impulsar una
           necesidad digital, te acompañamos con atención cercana y una ruta
           clara.

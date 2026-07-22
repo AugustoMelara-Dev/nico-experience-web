@@ -30,8 +30,8 @@ export function PropertyHero({ property }: { property: Property }) {
         sizes="100vw"
         className="object-cover object-center"
       />
-      <div className="absolute inset-0 bg-linear-to-r from-[color:var(--brand-navy)]/95 via-[color:var(--brand-navy)]/72 to-foreground/20" />
-      <div className="absolute inset-0 bg-linear-to-t from-background via-transparent to-foreground/20" />
+      <div className="absolute inset-0 bg-linear-to-r from-[color:var(--brand-navy)]/78 via-[color:var(--brand-navy)]/42 to-transparent" />
+      <div className="absolute inset-0 bg-linear-to-t from-background/90 via-transparent to-foreground/10" />
 
       <div className="relative mx-auto w-full max-w-(--breakpoint-xl) px-4 pt-8 md:px-8">
         <Breadcrumb>
@@ -85,10 +85,14 @@ export function PropertyHero({ property }: { property: Property }) {
               message={property.whatsappMessage}
               label="Consultar disponibilidad"
             />
-            <ShareButton title={property.name} />
+            <ShareButton
+              title={property.name}
+              className="border-white/30 bg-white/10 text-white backdrop-blur-sm hover:bg-white/15 hover:text-white"
+            />
             <PdfDownloadLink
               href={`/api/alojamientos/${property.slug}/pdf`}
               label="Descargar ficha"
+              className="border-white/30 bg-white/10 text-white backdrop-blur-sm hover:bg-white/15 hover:text-white"
             />
           </div>
         </motion.div>

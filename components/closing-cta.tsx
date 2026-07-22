@@ -7,8 +7,8 @@ import { businessConfig } from "@/config/business"
 export default function ClosingCta() {
   return (
     <section className="mx-auto w-full max-w-7xl px-4 py-20 md:px-8 md:py-28">
-      <div className="grid gap-8 overflow-hidden rounded-2xl border bg-card p-6 sm:p-10 lg:grid-cols-[1fr_auto] lg:items-end lg:p-12">
-        <div className="flex max-w-3xl flex-col gap-4">
+      <div className="mx-auto flex max-w-5xl flex-col items-center text-center gap-8 overflow-hidden rounded-2xl border bg-card/65 p-6 sm:p-10 lg:p-14">
+        <div className="flex max-w-3xl flex-col items-center gap-4">
           <span className="text-sm font-medium text-primary">
             Una conversación puede aclararlo todo
           </span>

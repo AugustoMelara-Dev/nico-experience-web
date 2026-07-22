@@ -16,5 +16,7 @@ describe("contacto premium", () => {
     expect(form).toContain('from "@/components/ui/select"')
     expect(form).toContain("aria-describedby=")
     expect(page).toContain("<BusinessLocation")
+    expect(page).toContain("max-w-7xl")
+    expect(page).toContain("lg:grid-cols-[.8fr_1.2fr]")
   })
 })
