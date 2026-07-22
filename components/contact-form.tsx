@@ -2,15 +2,37 @@
 
 import { FormEvent, useState } from "react"
 import { Send } from "lucide-react"
+
 import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+import {
+  Field,
+  FieldDescription,
+  FieldGroup,
+  FieldLabel,
+} from "@/components/ui/field"
+import { Input } from "@/components/ui/input"
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+import { Textarea } from "@/components/ui/textarea"
 import {
   buildInquiryMessage,
   buildWhatsAppUrl,
   type InquiryInput,
 } from "@/lib/whatsapp"
-
-const inputClass = "mt-2 h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]"
 
 type ServiceSelection = InquiryInput["service"]
 
@@ -30,9 +52,11 @@ export function ContactForm({
 }) {
   const [notice, setNotice] = useState("")
   const [service, setService] = useState<ServiceSelection>(initialService)
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
+    setIsSubmitting(true)
     const form = new FormData(event.currentTarget)
     const message = buildInquiryMessage({
       name: String(form.get("name")),
@@ -47,6 +71,7 @@ export function ContactForm({
         service === "viajes" ? String(form.get("destination")) : undefined,
     })
     const url = buildWhatsAppUrl(message)
+
     if (url) {
       window.open(url, "_blank", "noopener,noreferrer")
       setNotice("Tu consulta está lista. Continúa en WhatsApp para enviarla.")
@@ -55,68 +80,142 @@ export function ContactForm({
         "No fue posible abrir WhatsApp. Tus datos no fueron enviados ni almacenados.",
       )
     }
+    setIsSubmitting(false)
   }
 
   return (
     <Card className="rounded-2xl">
-      <CardContent>
-        <form onSubmit={submit} className="space-y-5">
-          <div className="grid gap-5 sm:grid-cols-2">
-            <label className="text-sm font-medium">
-              Nombre
-              <input required name="name" autoComplete="name" className={inputClass} />
-            </label>
-            <label className="text-sm font-medium">
-              ¿En qué podemos ayudarte?
-              <select
-                name="service"
+      <form onSubmit={submit}>
+        <CardHeader>
+          <CardTitle>Prepara tu consulta</CardTitle>
+          <CardDescription>
+            Usaremos estos datos únicamente para crear el mensaje que abrirás
+            en WhatsApp.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <FieldGroup className="grid gap-5 sm:grid-cols-2">
+            <Field>
+              <FieldLabel htmlFor="contact-name">Nombre</FieldLabel>
+              <Input
+                id="contact-name"
+                required
+                name="name"
+                autoComplete="name"
+                aria-describedby="contact-name-help"
+              />
+              <FieldDescription id="contact-name-help">
+                Así podremos personalizar tu mensaje.
+              </FieldDescription>
+            </Field>
+
+            <Field>
+              <FieldLabel htmlFor="contact-service">
+                ¿En qué podemos ayudarte?
+              </FieldLabel>
+              <Select
                 value={service}
-                onChange={(event) => setService(event.target.value as ServiceSelection)}
-                className={inputClass}
+                onValueChange={(value) =>
+                  setService(value as ServiceSelection)
+                }
               >
-                {serviceOptions.map((option) => (
-                  <option key={option.value} value={option.value}>
-                    {option.label}
-                  </option>
-                ))}
-              </select>
-            </label>
-            {service === "hospedaje" && (
+                <SelectTrigger
+                  id="contact-service"
+                  className="w-full"
+                  aria-describedby="contact-service-help"
+                >
+                  <SelectValue placeholder="Selecciona un servicio" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    {serviceOptions.map((option) => (
+                      <SelectItem key={option.value} value={option.value}>
+                        {option.label}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+              <FieldDescription id="contact-service-help">
+                Mostraremos campos útiles según tu selección.
+              </FieldDescription>
+            </Field>
+
+            {service === "hospedaje" ? (
               <>
-                <label className="text-sm font-medium">
-                  Alojamiento
-                  <input name="property" value="Casa Palac" readOnly className={inputClass} />
-                </label>
-                <label className="text-sm font-medium">
-                  Fecha aproximada
-                  <input name="date" type="date" className={inputClass} />
-                </label>
-                <label className="text-sm font-medium">
-                  Cantidad de personas
-                  <input name="guests" type="number" min="1" className={inputClass} />
-                </label>
+                <Field>
+                  <FieldLabel htmlFor="contact-property">
+                    Alojamiento
+                  </FieldLabel>
+                  <Input
+                    id="contact-property"
+                    name="property"
+                    value="Casa Palac"
+                    readOnly
+                  />
+                </Field>
+                <Field>
+                  <FieldLabel htmlFor="contact-date">
+                    Fecha aproximada
+                  </FieldLabel>
+                  <Input id="contact-date" name="date" type="date" />
+                </Field>
+                <Field>
+                  <FieldLabel htmlFor="contact-guests">
+                    Cantidad de personas
+                  </FieldLabel>
+                  <Input
+                    id="contact-guests"
+                    name="guests"
+                    type="number"
+                    min="1"
+                    inputMode="numeric"
+                  />
+                </Field>
               </>
-            )}
-            {service === "viajes" && (
-              <label className="text-sm font-medium sm:col-span-2">
-                Destino o necesidad
-                <input name="destination" className={inputClass} />
-              </label>
-            )}
-            <label className="text-sm font-medium sm:col-span-2">
-              Cuéntanos qué necesitas
-              <textarea
+            ) : null}
+
+            {service === "viajes" ? (
+              <Field className="sm:col-span-2">
+                <FieldLabel htmlFor="contact-destination">
+                  Destino o necesidad
+                </FieldLabel>
+                <Input id="contact-destination" name="destination" />
+              </Field>
+            ) : null}
+
+            <Field className="sm:col-span-2">
+              <FieldLabel htmlFor="contact-details">
+                Cuéntanos qué necesitas
+              </FieldLabel>
+              <Textarea
+                id="contact-details"
                 required
                 name="details"
                 rows={5}
-                className={`${inputClass} h-auto resize-y`}
+                aria-describedby="contact-details-help"
               />
-            </label>
-          </div>
-          <Button type="submit"><Send /> Continuar en WhatsApp</Button>
-          {notice && <p role="status" className="rounded-lg border border-border bg-card p-4 text-sm leading-6 text-muted-foreground">{notice}</p>}
-        </form>
-      </CardContent>
+              <FieldDescription id="contact-details-help">
+                Incluye los detalles que nos ayuden a entender mejor tu caso.
+              </FieldDescription>
+            </Field>
+          </FieldGroup>
+        </CardContent>
+        <CardFooter className="flex flex-col items-start gap-4">
+          <Button type="submit" disabled={isSubmitting}>
+            <Send data-icon="inline-start" />
+            Continuar en WhatsApp
+          </Button>
+          {notice ? (
+            <p
+              role="status"
+              className="rounded-lg border bg-muted p-4 text-sm leading-6 text-muted-foreground"
+            >
+              {notice}
+            </p>
+          ) : null}
+        </CardFooter>
+      </form>
     </Card>
   )
 }
