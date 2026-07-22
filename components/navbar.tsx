@@ -1,41 +1,174 @@
-"use client";
+"use client"
 
-import Link from "next/link";
-import { Menu, MessageCircle, X } from "lucide-react";
-import { usePathname } from "next/navigation";
-import { useState } from "react";
-import { siteConfig } from "@/config/site";
-import { buildWhatsAppUrl } from "@/lib/whatsapp";
+import Link from "next/link"
+import { useEffect, useState } from "react"
+import { ChevronDown, House, MapPin, Menu } from "lucide-react"
+
+import { BrandLogo } from "@/components/brand-logo"
+import ThemeSwitcher from "@/components/theme-switcher"
+import { Button } from "@/components/ui/button"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet"
+import { businessConfig } from "@/config/business"
+import { cn } from "@/lib/utils"
+
+const menuItems = [
+  { name: "Inicio", href: "/" },
+  { name: "Servicios", href: "/#servicios" },
+  { name: "Alojamientos", href: "/alojamientos" },
+  { name: "Preguntas", href: "/#preguntas" },
+  { name: "Contacto", href: "/contacto" },
+]
 
 export default function NavBar() {
-  const [open, setOpen] = useState(false);
-  const pathname = usePathname();
-  const whatsappUrl = buildWhatsAppUrl("Hola, visité la página de Nico Experience y me gustaría consultar disponibilidad.");
+  const [isScrolled, setIsScrolled] = useState(false)
+
+  useEffect(() => {
+    const handleScroll = () => setIsScrolled(window.scrollY > 12)
+    handleScroll()
+    window.addEventListener("scroll", handleScroll, { passive: true })
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
 
   return (
-    <header className="sticky top-0 z-50 border-b border-forest/10 bg-sand-light/95 backdrop-blur-md">
-      <nav aria-label="Navegación principal" className="container-site flex h-20 items-center justify-between gap-6">
-        <Link href="/" className="font-display text-2xl font-semibold tracking-tight text-forest sm:text-3xl">Nico Experience</Link>
-        <div className="hidden items-center gap-8 lg:flex">
-          {siteConfig.navigation.map((item) => (
-            <Link key={item.href} href={item.href} aria-current={pathname === item.href ? "page" : undefined} className={`border-b-2 py-2 text-sm font-semibold transition-colors ${pathname === item.href ? "border-terracotta text-forest" : "border-transparent text-ink hover:text-terracotta"}`}>{item.label}</Link>
-          ))}
-        </div>
-        <div className="hidden lg:block">
-          <Link href={whatsappUrl ?? "/contacto"} target={whatsappUrl ? "_blank" : undefined} rel={whatsappUrl ? "noreferrer" : undefined} className="inline-flex h-11 items-center gap-2 rounded-lg bg-forest px-5 text-sm font-bold text-white transition-colors hover:bg-forest-deep">
-            <MessageCircle className="size-5" aria-hidden="true" /> Consultar por WhatsApp
-          </Link>
-        </div>
-        <button type="button" onClick={() => setOpen((value) => !value)} aria-expanded={open} aria-controls="mobile-menu" aria-label={open ? "Cerrar menú" : "Abrir menú"} className="grid size-11 place-items-center rounded-lg text-forest hover:bg-forest/10 lg:hidden">{open ? <X /> : <Menu />}</button>
-      </nav>
-      {open && (
-        <div id="mobile-menu" className="border-t border-forest/10 bg-sand-light px-4 pb-6 lg:hidden">
-          <div className="container-site flex flex-col gap-1 pt-4">
-            {siteConfig.navigation.map((item) => <Link key={item.href} href={item.href} onClick={() => setOpen(false)} className="rounded-lg px-3 py-3 text-base font-semibold text-forest hover:bg-forest/10">{item.label}</Link>)}
-            <Link href={whatsappUrl ?? "/contacto"} target={whatsappUrl ? "_blank" : undefined} className="mt-3 inline-flex items-center justify-center gap-2 rounded-lg bg-forest px-4 py-3 font-bold text-white"><MessageCircle className="size-5" /> Consultar por WhatsApp</Link>
-          </div>
-        </div>
+    <nav
+      className={cn(
+        "sticky top-0 z-50 w-full border-b border-transparent transition-[background-color,border-color,backdrop-filter] duration-300",
+        isScrolled && "border-border/60 bg-background/82 backdrop-blur-xl",
       )}
-    </header>
-  );
+    >
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center gap-3 sm:hidden">
+          <Sheet>
+            <SheetTrigger asChild>
+              <Button variant="ghost" size="icon" aria-label="Abrir menú">
+                <Menu aria-hidden="true" />
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="left" className="w-[88vw] max-w-sm">
+              <SheetHeader className="border-b p-6">
+                <BrandLogo compact />
+                <SheetTitle className="sr-only">
+                  Navegación principal
+                </SheetTitle>
+                <SheetDescription className="sr-only">
+                  Enlaces principales de Nico Experience
+                </SheetDescription>
+              </SheetHeader>
+              <div className="flex flex-1 flex-col p-4">
+                <div className="grid gap-1" aria-label="Navegación móvil">
+                  {menuItems.map((item) => (
+                    <SheetClose asChild key={item.name}>
+                      <Link
+                        href={item.href}
+                        className="rounded-md px-3 py-3 text-base font-medium transition-colors hover:bg-muted"
+                      >
+                        {item.name}
+                      </Link>
+                    </SheetClose>
+                  ))}
+                </div>
+                <div className="mt-auto flex flex-col gap-3 border-t pt-5">
+                  <Button asChild variant="outline" className="justify-start">
+                    <Link href="/alojamientos/casa-palac">
+                      <House data-icon="inline-start" />
+                      Casa Palac
+                    </Link>
+                  </Button>
+                  <Button asChild variant="ghost" className="justify-start">
+                    <Link
+                      href={businessConfig.mapsUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <MapPin data-icon="inline-start" />
+                      Ubicación del negocio
+                    </Link>
+                  </Button>
+                </div>
+              </div>
+            </SheetContent>
+          </Sheet>
+        </div>
+
+        <Link href="/" aria-label="Nico Experience, inicio">
+          <BrandLogo compact priority />
+        </Link>
+
+        <div className="hidden items-center gap-1 sm:flex">
+          <Button asChild variant="ghost" size="sm">
+            <Link href="/#servicios">Servicios</Link>
+          </Button>
+          <Button asChild variant="ghost" size="sm">
+            <Link href="/alojamientos">Alojamientos</Link>
+          </Button>
+          <Button asChild variant="ghost" size="sm">
+            <Link href="/#preguntas">Preguntas</Link>
+          </Button>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" size="sm">
+                Explorar
+                <ChevronDown data-icon="inline-end" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-80" align="end">
+              <DropdownMenuGroup>
+                <DropdownMenuItem asChild>
+                  <Link href="/alojamientos/casa-palac" className="items-start">
+                    <House className="mt-0.5 size-4" aria-hidden="true" />
+                    <div>
+                      <div className="font-semibold">Casa Palac</div>
+                      <div className="text-sm text-muted-foreground">
+                        Una casa ubicada frente a la playa.
+                      </div>
+                    </div>
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link
+                    href={businessConfig.mapsUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="items-start"
+                  >
+                    <MapPin className="mt-0.5 size-4" aria-hidden="true" />
+                    <div>
+                      <div className="font-semibold">
+                        Ubicación de Nico Experience
+                      </div>
+                      <div className="text-sm text-muted-foreground">
+                        {businessConfig.locationLabel}
+                      </div>
+                    </div>
+                  </Link>
+                </DropdownMenuItem>
+              </DropdownMenuGroup>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
+
+        <div className="flex items-center gap-2">
+          <Button asChild className="hidden sm:inline-flex" size="sm">
+            <Link href="/contacto">Contacto</Link>
+          </Button>
+          <ThemeSwitcher />
+        </div>
+      </div>
+    </nav>
+  )
 }

@@ -1,16 +1,61 @@
-"use client";
+"use client"
 
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import Link from "next/link"
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
+import { motion } from "framer-motion"
 
-const items = [
-  ["¿A qué hora es el check-in?", "Para Casa VIP, el check-in es a partir de las 2:00 p. m."],
-  ["¿A qué hora es el check-out?", "Para Casa VIP, el check-out es a las 12:00 m."],
-  ["¿Se permiten mascotas?", "No. La regla confirmada para Casa VIP indica que no se permiten mascotas."],
-  ["¿Cómo consulto disponibilidad?", "Puedes usar el botón de consulta. El número oficial de WhatsApp se habilitará cuando sea confirmado."],
-];
+const accordionItems = [
+  {
+    title: "¿Cómo puedo solicitar ayuda?",
+    content: <div className="text-muted-foreground">Selecciona el servicio que necesitas, cuéntanos brevemente tu caso y continúa la conversación por WhatsApp. El mensaje se prepara con la información que tú proporcionas.</div>,
+  },
+  {
+    title: "¿Qué servicios ofrece Nico Experience?",
+    content: <div className="text-muted-foreground">Brindamos atención personalizada para viajes, hospedaje, trámites, gestiones y soluciones digitales, adaptándonos a las necesidades de cada cliente.</div>,
+  },
+  {
+    title: "¿Cómo consulto un alojamiento?",
+    content: <div className="text-muted-foreground">Abre la ficha del alojamiento o selecciona Hospedaje en el formulario. Puedes indicar fecha aproximada, cantidad de personas y tu consulta antes de continuar por WhatsApp.</div>,
+  },
+  {
+    title: "¿Dónde se encuentra Casa Palac?",
+    content: <div className="text-muted-foreground">Puedes abrir la ubicación oficial en <Link href="https://maps.app.goo.gl/BhDjLciEvjhp8pBN8?g_st=iw" target="_blank" rel="noopener noreferrer" className="text-primary underline">Google Maps</Link>.</div>,
+  },
+  {
+    title: "¿Dónde atiende Nico Experience?",
+    content: <div className="text-muted-foreground">Nico Experience está ubicada en Tocoa, Colón. La atención y el alcance de cada solicitud se confirman directamente según el servicio.</div>,
+  },
+  {
+    title: "¿Qué sucede después de enviar la consulta?",
+    content: <div className="text-muted-foreground">WhatsApp se abrirá con un mensaje preparado. Revísalo, envíalo y recibirás atención personalizada para definir los siguientes pasos.</div>,
+  },
+]
 
 export default function Faq() {
   return (
-    <section className="section-space bg-white" aria-labelledby="faq-title"><div className="container-site grid gap-12 lg:grid-cols-[.7fr_1.3fr]"><div><h2 id="faq-title" className="font-display text-5xl font-semibold text-forest sm:text-6xl">Antes de tu estadía</h2><div className="mt-6 h-0.5 w-14 bg-terracotta" /></div><Accordion type="single" collapsible defaultValue="item-0" className="w-full">{items.map(([title, content], index) => <AccordionItem key={title} value={`item-${index}`} className="border-forest/20"><AccordionTrigger className="py-6 text-left text-base font-semibold text-ink hover:text-terracotta">{title}</AccordionTrigger><AccordionContent className="pb-6 leading-7 text-muted">{content}</AccordionContent></AccordionItem>)}</Accordion></div></section>
-  );
+    <motion.section
+      id="preguntas"
+      initial={{ y: 20, opacity: 0 }}
+      whileInView={{ y: 0, opacity: 1 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5, delay: 0.5, type: "spring", bounce: 0 }}
+      className="relative mx-auto flex w-full max-w-7xl flex-col items-center justify-center gap-10 px-4 py-20 md:px-8 md:py-28"
+    >
+      <div className="flex max-w-2xl flex-col items-center justify-center gap-3 text-center">
+        <span className="text-sm font-medium text-primary">Antes de consultar</span>
+        <h2 className="text-3xl font-medium tracking-tighter sm:text-4xl">Preguntas frecuentes</h2>
+        <p className="max-w-xl text-muted-foreground text-center">Información útil antes de contarnos qué necesitas.</p>
+      </div>
+      <div className="flex w-full max-w-2xl">
+        <Accordion type="multiple" className="w-full">
+          {accordionItems.map((item, index) => (
+            <AccordionItem key={item.title} value={`item-${index}`} className="text-muted-foreground">
+              <AccordionTrigger className="text-left">{item.title}</AccordionTrigger>
+              <AccordionContent>{item.content}</AccordionContent>
+            </AccordionItem>
+          ))}
+        </Accordion>
+      </div>
+    </motion.section>
+  )
 }

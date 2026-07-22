@@ -1,14 +1,19 @@
 # Nico Experience Web
 
-Catálogo turístico de Nico Experience construido sobre el historial de [`gonzalochale/saas-landing-template`](https://github.com/gonzalochale/saas-landing-template), conservando su licencia MIT.
+Landing de Nico Experience, empresa de turismo y soluciones integrales ubicada en Tocoa, Colón. La web presenta servicios de viajes, hospedaje, trámites, gestiones y soluciones digitales con atención personalizada.
 
-## Páginas
+El proyecto está adaptado desde [`gonzalochale/saas-landing-template`](https://github.com/gonzalochale/saas-landing-template). La tipografía, los tokens, el glow, navbar, tarjetas, FAQ, animaciones, dark mode y comportamiento responsive de la plantilla original se conservan como base visual.
 
-- `/` — presentación, hospedaje destacado, beneficios, galería y preguntas frecuentes.
-- `/cabanas` — catálogo de propiedades activas.
-- `/cabanas/casa-vip` — detalle estable de Casa VIP, galería ampliable, precios, reglas y consulta.
-- `/nosotros` — presentación de Nico Experience.
-- `/contacto` — formulario que prepara un mensaje de WhatsApp sin simular envíos.
+## Rutas
+
+- `/` — landing principal del negocio, servicios, alojamiento destacado y preguntas frecuentes.
+- `/alojamientos` — catálogo de propiedades activas.
+- `/alojamientos/casa-palac` — micrositio canónico de Casa Palac, ubicada frente a la playa.
+- `/contacto` — formulario que prepara una consulta contextual y continúa por WhatsApp.
+- `/api/alojamientos/casa-palac/pdf` — ficha PDF individual descargable.
+- `/api/alojamientos/catalogo/pdf` — catálogo PDF de propiedades activas.
+
+`/alojamientos/casa-palac-frente-a-playa`, `/cabanas`, `/cabanas/casa-vip` y `/nosotros` redirigen a destinos vigentes para conservar enlaces anteriores.
 
 ## Desarrollo
 
@@ -18,7 +23,7 @@ cp .env.example .env.local
 pnpm dev
 ```
 
-Comprobaciones:
+Comprobaciones obligatorias:
 
 ```bash
 pnpm lint
@@ -29,40 +34,73 @@ pnpm build
 
 ## Configuración
 
-Las variables públicas están documentadas en `.env.example`. `NEXT_PUBLIC_WHATSAPP_NUMBER` debe usar formato internacional, solo con dígitos; por ejemplo, `50499999999`. Mientras el número no esté configurado, los CTA llevan a Contacto y el formulario explica que no envió ni almacenó información.
+Las variables públicas están documentadas en `.env.example`:
 
-La configuración general vive en `config/site.ts`. No se deben agregar secretos a variables que comiencen por `NEXT_PUBLIC_`.
+- `NEXT_PUBLIC_SITE_URL`: URL pública canónica.
+- `NEXT_PUBLIC_WHATSAPP_NUMBER`: número internacional solo con dígitos.
+- `NEXT_PUBLIC_PHONE`: formato legible para mostrar en la interfaz.
+- variables sociales: enlaces oficiales cuando el negocio los proporcione.
 
-## Agregar una cabaña
+El teléfono confirmado es `+504 9373-1060` y el valor normalizado de WhatsApp es `50493731060`. La configuración general vive en `config/site.ts`. No guardes secretos en variables que comiencen por `NEXT_PUBLIC_`.
 
-1. Optimiza las fotografías y guárdalas en `public/images/<slug>/`.
-2. Agrega un objeto que cumpla `Property` en `content/properties.ts`.
-3. Define un `slug` único, `featuredImage`, textos alternativos y solo datos confirmados.
-4. Marca `active: true` cuando pueda publicarse.
-5. Ejecuta lint, typecheck, test y build. La ruta `/cabanas/<slug>` y el sitemap se generan automáticamente.
+La ubicación oficial de Nico Experience se centraliza en `config/business.ts`, con el enlace `https://maps.app.goo.gl/CV11vyc2QaYzxB1x6` y las coordenadas resueltas `15.656205, -86.004107`. El mapa usa MapLibre mediante `react-map-gl`, estilos de OpenFreeMap y un fallback accesible a Google Maps. La ubicación del negocio y la de cada alojamiento son datos distintos y no deben reutilizarse entre sí.
 
-## Cambiar fotografías, precios o textos
+## Agregar otro alojamiento
 
-- Fotografías y textos por propiedad: `content/properties.ts`.
-- Precio: campo `price` de la propiedad; depósito y persona adicional tienen campos propios.
-- Identidad, contactos, navegación y URL pública: `config/site.ts` y variables de entorno.
-- Estilos globales: `app/globals.css`.
+1. Guarda sus fotografías optimizadas en `public/images/<slug>/` y conserva los originales fuera de esa carpeta pública.
+2. Agrega un objeto validado por Zod en `content/properties.ts`.
+3. Define un `slug` único, nombre, descripciones, `featuredImage` y medios con título, descripción, categoría y texto alternativo.
+4. Si la ubicación está confirmada, agrega su `mapUrl` y coordenadas propias; no copies las coordenadas del negocio.
+5. Selecciona hasta seis fotografías representativas con `includeInPdf: true` y una variante JPEG local en `pdfSrc` dentro de `public/pdf-assets/<slug>/`.
+6. Incluye únicamente ubicación, características, inventario, capacidad, precio y políticas confirmadas.
+7. Marca `active: true` cuando esté listo para publicarse y `featured: true` si debe aparecer en inicio.
+8. Ejecuta lint, typecheck, pruebas y build. La ruta `/alojamientos/<slug>`, la ficha PDF y el sitemap se generan automáticamente.
 
-## Datos pendientes antes de una campaña comercial
+El catálogo visual se genera desde `activeProperties` mediante `components/property-catalog.tsx`. Una propiedad se centra; dos o más pasan automáticamente a una grilla responsive de dos y tres columnas. La composición destacada de la página principal permanece separada en `components/pricing.tsx`.
 
-- Número oficial de WhatsApp y teléfono.
-- Enlaces oficiales de redes y Google Maps.
-- Ubicación más específica y horario de atención.
-- Logo oficial.
-- Capacidad, cantidad de habitaciones/baños y distribución de camas.
-- Inventario confirmado de cocina y otras amenidades.
-- Videos y reseñas verificadas.
-- Confirmación de que precios, depósito, horarios y reglas de Casa VIP siguen vigentes.
+## Actualizar contenido
 
-## Despliegue
+- Cambiar una fotografía: reemplaza el derivado en `public/images/<slug>/` manteniendo el nombre o actualiza `src` en `content/properties.ts`. Conserva proporción y original.
+- Cambiar una fotografía del PDF: reemplaza su JPEG en `public/pdf-assets/<slug>/` o actualiza `pdfSrc`; vuelve a descargar y revisar todas las páginas.
+- Agregar un video: añade una entrada a `videos` con título, URL, proveedor y poster opcional. Los archivos locales no deben reproducirse automáticamente.
+- Modificar una descripción: edita la propiedad o la entrada de `media` correspondiente en `content/properties.ts`.
+- Actualizar la cocina: modifica `kitchenInventory` únicamente con elementos confirmados.
+- Agregar un testimonio: incorpora una entrada real y autorizada en `content/testimonials.ts` con `verified: true`. La sección permanece oculta si la lista está vacía.
+- Cambiar un servicio: edita `content/services.ts`; los iconos disponibles están limitados por el esquema Zod.
+- Cambiar WhatsApp: actualiza `NEXT_PUBLIC_WHATSAPP_NUMBER` y `NEXT_PUBLIC_PHONE` localmente y en Vercel.
+- Regenerar fotografías: ejecuta `py -3 scripts/optimize-property-photos.py` desde los originales preservados y revisa visualmente el resultado.
+- Regenerar marca y PDF: ejecuta `py -3 scripts/prepare-brand-and-pdf-assets.py`; conserva `source-assets/brand/nico-experience-logo.jpeg` y `source-assets/hero/nico-experience-neutral.png` como fuentes recuperables.
+- Cambiar el logo: reemplaza únicamente `source-assets/brand/nico-experience-logo.jpeg`, ejecuta el script anterior y revisa navbar, footer, claro, oscuro y las fichas PDF.
+- Lockup transparente del footer: `public/brand/nico-experience-lockup-transparent.webp`. Conserva siempre el JPEG original como fuente y valida manualmente texto, símbolo, transparencia y contraste antes de sustituir este derivado.
+- Cambiar el hero neutral: reemplaza `source-assets/hero/nico-experience-neutral.png`, ejecuta el script y confirma que la imagen no represente falsamente una propiedad, destino o persona real.
 
-Configura las variables de `.env.example` en Vercel y usa `pnpm build`. Para conectar un dominio, abre **Project Settings → Domains**, agrega el dominio y aplica los registros DNS que indique Vercel; después actualiza `NEXT_PUBLIC_SITE_URL` con la URL canónica.
+## Descargas PDF
+
+Las fichas se generan en el servidor con `@react-pdf/renderer` desde los mismos datos Zod que usa la web. No dupliques textos dentro de los componentes PDF. La ficha individual incluye hasta seis fotos y el catálogo usa únicamente propiedades activas. Un slug inexistente o inactivo responde 404.
+
+Después de cambiar contenido o fotografías, descarga ambos PDF, guárdalos temporalmente en `output/pdf/`, renderiza todas las páginas con Poppler dentro de `tmp/pdfs/` y verifica cortes, caracteres, enlaces, calidad y peso antes de desplegar.
+
+## Datos confirmados
+
+- Empresa: Nico Experience.
+- Ubicación del negocio: Tocoa, Colón.
+- Maps del negocio: `https://maps.app.goo.gl/CV11vyc2QaYzxB1x6`.
+- Servicios: viajes, hospedaje, trámites, gestiones y soluciones digitales.
+- Teléfono y WhatsApp: `+504 9373-1060`.
+- Propiedad: Casa Palac, ubicada frente a la playa.
+- Maps de Casa Palac: `https://maps.app.goo.gl/BhDjLciEvjhp8pBN8?g_st=iw`.
+- Cocina documentada en el material proporcionado: estufa, refrigeradora, microondas, gabinetes y área de trabajo.
+- Álbum: 25 fotografías.
+
+## Datos aún no publicados
+
+- Enlaces oficiales de redes sociales.
+- Capacidad y cantidad exacta de habitaciones, baños y camas.
+- Vajilla, utensilios y cualquier equipamiento de cocina adicional.
+- Video reproducible.
+- Testimonios reales autorizados.
+- Precios, disponibilidad, horarios, reglas y política de cambios o cancelaciones.
 
 ## Licencia
 
-El código base se distribuye bajo la licencia MIT incluida en [`license.txt`](./license.txt).
+El código base conserva la licencia MIT incluida en [`license.txt`](./license.txt).
