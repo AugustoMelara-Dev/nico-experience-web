@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import "maplibre-gl/dist/maplibre-gl.css";
 import { Providers } from "./providers";
 import NavBar from "@/components/navbar";
 import { Geist } from "next/font/google";
