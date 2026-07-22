@@ -2,7 +2,8 @@ import type { Metadata } from "next"
 
 import Footer from "@/components/footer"
 import { PdfDownloadLink } from "@/components/pdf-download-link"
-import Pricing from "@/components/pricing"
+import { PropertyCatalog } from "@/components/property-catalog"
+import { activeProperties } from "@/content/properties"
 
 export const metadata: Metadata = {
   title: "Alojamientos",
@@ -14,8 +15,8 @@ export const metadata: Metadata = {
 export default function PropertiesPage() {
   return (
     <main id="contenido">
-      <section className="mx-auto grid max-w-7xl gap-8 px-4 py-20 md:px-8 md:py-28 lg:grid-cols-[1fr_auto] lg:items-end">
-        <div className="flex max-w-3xl flex-col gap-5">
+      <section className="mx-auto flex max-w-7xl flex-col items-center gap-8 px-4 py-20 text-center md:px-8 md:py-28">
+        <div className="flex max-w-3xl flex-col items-center gap-5">
           <span className="text-sm font-medium text-primary">
             Catálogo activo
           </span>
@@ -33,7 +34,7 @@ export default function PropertiesPage() {
         />
       </section>
 
-      <Pricing />
+      <PropertyCatalog properties={activeProperties} />
       <Footer />
     </main>
   )
