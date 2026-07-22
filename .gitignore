@@ -36,6 +36,9 @@ yarn-error.log*
 /.corepack-bin/
 /tmp/pdfs/
 /output/pdf/
+/tmp/chrome-qa-*/
+/tmp/qa.cjs
+/output/playwright/
 
 # typescript
 *.tsbuildinfo

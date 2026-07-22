@@ -1,4 +1,5 @@
 import Faq from "@/components/faq"
+import ClosingCta from "@/components/closing-cta"
 import Footer from "@/components/footer"
 import Hero from "@/components/hero"
 import Partners from "@/components/partners"
@@ -20,4 +21,3 @@ export default function Home() {
     </main>
   )
 }
-import ClosingCta from "@/components/closing-cta"

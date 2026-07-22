@@ -43,15 +43,18 @@ Las variables públicas están documentadas en `.env.example`:
 
 El teléfono confirmado es `+504 9373-1060` y el valor normalizado de WhatsApp es `50493731060`. La configuración general vive en `config/site.ts`. No guardes secretos en variables que comiencen por `NEXT_PUBLIC_`.
 
+La ubicación oficial de Nico Experience se centraliza en `config/business.ts`, con el enlace `https://maps.app.goo.gl/CV11vyc2QaYzxB1x6` y las coordenadas resueltas `15.656205, -86.004107`. El mapa usa MapLibre mediante `react-map-gl`, estilos de OpenFreeMap y un fallback accesible a Google Maps. La ubicación del negocio y la de cada alojamiento son datos distintos y no deben reutilizarse entre sí.
+
 ## Agregar otro alojamiento
 
 1. Guarda sus fotografías optimizadas en `public/images/<slug>/` y conserva los originales fuera de esa carpeta pública.
 2. Agrega un objeto validado por Zod en `content/properties.ts`.
 3. Define un `slug` único, nombre, descripciones, `featuredImage` y medios con título, descripción, categoría y texto alternativo.
-4. Selecciona hasta seis fotografías representativas con `includeInPdf: true` y una variante JPEG local en `pdfSrc` dentro de `public/pdf-assets/<slug>/`.
-5. Incluye únicamente ubicación, características, inventario, capacidad, precio y políticas confirmadas.
-6. Marca `active: true` cuando esté listo para publicarse y `featured: true` si debe aparecer en inicio.
-7. Ejecuta lint, typecheck, pruebas y build. La ruta `/alojamientos/<slug>`, la ficha PDF y el sitemap se generan automáticamente.
+4. Si la ubicación está confirmada, agrega su `mapUrl` y coordenadas propias; no copies las coordenadas del negocio.
+5. Selecciona hasta seis fotografías representativas con `includeInPdf: true` y una variante JPEG local en `pdfSrc` dentro de `public/pdf-assets/<slug>/`.
+6. Incluye únicamente ubicación, características, inventario, capacidad, precio y políticas confirmadas.
+7. Marca `active: true` cuando esté listo para publicarse y `featured: true` si debe aparecer en inicio.
+8. Ejecuta lint, typecheck, pruebas y build. La ruta `/alojamientos/<slug>`, la ficha PDF y el sitemap se generan automáticamente.
 
 ## Actualizar contenido
 
@@ -78,6 +81,7 @@ Después de cambiar contenido o fotografías, descarga ambos PDF, guárdalos tem
 
 - Empresa: Nico Experience.
 - Ubicación del negocio: Tocoa, Colón.
+- Maps del negocio: `https://maps.app.goo.gl/CV11vyc2QaYzxB1x6`.
 - Servicios: viajes, hospedaje, trámites, gestiones y soluciones digitales.
 - Teléfono y WhatsApp: `+504 9373-1060`.
 - Propiedad: Casa Palac, ubicada frente a la playa.
