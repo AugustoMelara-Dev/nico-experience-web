@@ -1,3 +1,5 @@
+import { businessConfig } from "@/config/business"
+
 const env = (value: string | undefined) => value?.trim() ?? ""
 
 export const siteConfig = {
@@ -8,6 +10,7 @@ export const siteConfig = {
   whatsappNumber:
     env(process.env.NEXT_PUBLIC_WHATSAPP_NUMBER) || "50493731060",
   phone: env(process.env.NEXT_PUBLIC_PHONE) || "+504 9373-1060",
+  business: businessConfig,
   social: {
     instagram: env(process.env.NEXT_PUBLIC_INSTAGRAM_URL),
     facebook: env(process.env.NEXT_PUBLIC_FACEBOOK_URL),
