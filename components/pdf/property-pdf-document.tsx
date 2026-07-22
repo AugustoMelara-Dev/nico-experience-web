@@ -10,7 +10,7 @@ import {
 import { brandConfig } from "@/config/brand"
 import type { Property } from "@/content/properties"
 import {
-  publicAssetPath,
+  publicAssetBuffer,
   selectPropertyPdfImages,
 } from "@/lib/property-pdf"
 import { buildWhatsAppUrl } from "@/lib/whatsapp"
@@ -46,7 +46,7 @@ export function PropertyPdfDocument({
       <Page size="A4" style={pdfStyles.page} wrap>
         <View style={pdfStyles.header} fixed>
           <Image
-            src={publicAssetPath(brandConfig.logoPdf)}
+            src={publicAssetBuffer(brandConfig.logoPdf)}
             style={pdfStyles.logo}
           />
           <Text style={pdfStyles.brandText}>{brandConfig.descriptor}</Text>
@@ -61,7 +61,7 @@ export function PropertyPdfDocument({
         {featured?.pdfSrc ? (
           <View style={pdfStyles.heroFrame} wrap={false}>
             <Image
-              src={publicAssetPath(featured.pdfSrc)}
+              src={publicAssetBuffer(featured.pdfSrc)}
               style={pdfStyles.hero}
             />
           </View>
@@ -100,7 +100,7 @@ export function PropertyPdfDocument({
             {images.map((image) => (
               <View key={image.src} style={pdfStyles.galleryItem} wrap={false}>
                 <Image
-                  src={publicAssetPath(image.pdfSrc!)}
+                  src={publicAssetBuffer(image.pdfSrc!)}
                   style={pdfStyles.galleryImage}
                 />
                 <View style={pdfStyles.caption}>

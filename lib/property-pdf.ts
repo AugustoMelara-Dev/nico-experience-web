@@ -1,4 +1,5 @@
 import { resolve, sep } from "node:path"
+import { readFileSync } from "node:fs"
 import type { Property } from "@/content/properties"
 
 export function selectPropertyPdfImages(property: Property) {
@@ -28,6 +29,10 @@ export function publicAssetPath(src: string) {
   }
 
   return destination
+}
+
+export function publicAssetBuffer(src: string) {
+  return readFileSync(publicAssetPath(src))
 }
 
 export function pdfResponse(buffer: Uint8Array, filename: string) {

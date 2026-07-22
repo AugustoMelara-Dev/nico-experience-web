@@ -4,6 +4,7 @@ import {
   catalogPdfFilename,
   pdfResponse,
   propertyPdfFilename,
+  publicAssetBuffer,
   publicAssetPath,
   selectPropertyPdfImages,
 } from "../lib/property-pdf"
@@ -31,6 +32,14 @@ describe("fichas PDF de alojamientos", () => {
     expect(() => publicAssetPath("/../package.json")).toThrow(
       "Ruta de activo inválida",
     )
+  })
+
+  it("carga bytes JPEG locales para incrustarlos en el documento", () => {
+    const bytes = publicAssetBuffer(property.media.find((item) => item.pdfSrc)!.pdfSrc!)
+
+    expect(Buffer.isBuffer(bytes)).toBe(true)
+    expect(bytes[0]).toBe(0xff)
+    expect(bytes[1]).toBe(0xd8)
   })
 
   it("genera cabeceras de descarga seguras", () => {
