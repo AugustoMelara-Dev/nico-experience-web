@@ -26,10 +26,10 @@ export function BrandLogo({
         width={compact ? 178 : 320}
         height={compact ? 46 : 180}
         className={cn(
-          "h-auto w-auto object-contain",
+          "h-auto w-auto object-contain dark:invert",
           compact
-            ? "max-h-8 max-w-38 dark:brightness-0 dark:invert sm:max-w-44"
-            : "w-full max-w-72 dark:brightness-0 dark:invert",
+            ? "max-h-8 max-w-38 sm:max-w-44"
+            : "w-full max-w-72",
         )}
         priority={priority}
       />

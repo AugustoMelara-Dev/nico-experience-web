@@ -6,22 +6,50 @@ import { Button } from "@/components/ui/button"
 
 export function ShareButton({
   title,
+  text,
+  url,
+  label = "Compartir",
   className,
 }: {
   title: string
+  text?: string
+  url?: string
+  label?: string
   className?: string
 }) {
-  const [copied, setCopied] = useState(false)
+  const [status, setStatus] = useState<"idle" | "copied" | "error">("idle")
+
+  async function copyUrl(shareUrl: string) {
+    try {
+      await navigator.clipboard.writeText(shareUrl)
+      setStatus("copied")
+    } catch {
+      setStatus("error")
+    }
+    window.setTimeout(() => setStatus("idle"), 2600)
+  }
 
   async function share() {
-    const data = { title, text: `Conoce ${title} en Nico Experience`, url: window.location.href }
-    if (navigator.share) {
-      await navigator.share(data)
-      return
+    const shareUrl = new URL(url ?? window.location.href, window.location.origin).toString()
+    const data = {
+      title,
+      text: text ?? `Conoce ${title} en Nico Experience.`,
+      url: shareUrl,
     }
-    await navigator.clipboard.writeText(window.location.href)
-    setCopied(true)
-    window.setTimeout(() => setCopied(false), 2200)
+
+    try {
+      if (
+        navigator.share &&
+        (!navigator.canShare || navigator.canShare(data))
+      ) {
+        await navigator.share(data)
+        return
+      }
+      await copyUrl(shareUrl)
+    } catch (error) {
+      if (error instanceof DOMException && error.name === "AbortError") return
+      await copyUrl(shareUrl)
+    }
   }
 
   return (
@@ -30,13 +58,18 @@ export function ShareButton({
       variant="outline"
       className={className}
       onClick={share}
+      aria-live="polite"
     >
-      {copied ? (
-        <Check data-icon="inline-start" />
+      {status === "copied" ? (
+        <Check data-icon="inline-start" aria-hidden="true" />
       ) : (
-        <Share2 data-icon="inline-start" />
+        <Share2 data-icon="inline-start" aria-hidden="true" />
       )}
-      {copied ? "Enlace copiado" : "Compartir"}
+      {status === "copied"
+        ? "Enlace copiado"
+        : status === "error"
+          ? "No se pudo copiar"
+          : label}
     </Button>
   )
 }

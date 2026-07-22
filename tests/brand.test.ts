@@ -20,7 +20,6 @@ describe("identidad de Nico Experience", () => {
     for (const src of [
       brandConfig.logoWeb,
       brandConfig.logoCompactWeb,
-      brandConfig.logoPdf,
       brandConfig.heroImage,
     ]) {
       expect(
@@ -54,12 +53,12 @@ describe("identidad de Nico Experience", () => {
     expect(navbar).toContain("<BrandLogo")
     expect(footer).toContain("<BrandLogo")
     expect(brandConfig.logoCompactWeb).toBe(
-      "/brand/nico-experience-wordmark-transparent.webp",
+      "/brand/nico-experience-wordmark-mono.webp",
     )
     expect(brandConfig.logoWeb).toBe(
-      "/brand/nico-experience-lockup-transparent.webp",
+      "/brand/nico-experience-lockup-mono.webp",
     )
-    expect(brandLogo).toContain("dark:invert")
+    expect(brandLogo).toContain("object-contain dark:invert")
     expect(brandLogo).not.toContain("border border-border bg-white")
   })
 

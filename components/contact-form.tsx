@@ -114,6 +114,7 @@ export function ContactForm({
                 ¿En qué podemos ayudarte?
               </FieldLabel>
               <Select
+                name="service"
                 value={service}
                 onValueChange={(value) =>
                   setService(value as ServiceSelection)
@@ -124,7 +125,7 @@ export function ContactForm({
                   className="w-full"
                   aria-describedby="contact-service-help"
                 >
-                  <SelectValue placeholder="Selecciona un servicio" />
+                  <SelectValue placeholder="Selecciona un servicio…" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>
@@ -180,7 +181,12 @@ export function ContactForm({
                 <FieldLabel htmlFor="contact-destination">
                   Destino o necesidad
                 </FieldLabel>
-                <Input id="contact-destination" name="destination" />
+                <Input
+                  id="contact-destination"
+                  name="destination"
+                  placeholder="Ej.: La Ceiba o Roatán…"
+                  autoComplete="off"
+                />
               </Field>
             ) : null}
 
@@ -193,6 +199,8 @@ export function ContactForm({
                 required
                 name="details"
                 rows={5}
+                placeholder="Ej.: Necesito opciones para 4 personas durante un fin de semana…"
+                autoComplete="off"
                 aria-describedby="contact-details-help"
               />
               <FieldDescription id="contact-details-help">
@@ -209,6 +217,7 @@ export function ContactForm({
           {notice ? (
             <p
               role="status"
+              aria-live="polite"
               className="rounded-lg border bg-muted p-4 text-sm leading-6 text-muted-foreground"
             >
               {notice}

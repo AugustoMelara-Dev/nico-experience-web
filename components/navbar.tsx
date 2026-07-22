@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 import { useEffect, useState } from "react"
 import { ChevronDown, House, MapPin, Menu } from "lucide-react"
 
@@ -36,6 +37,11 @@ const menuItems = [
 
 export default function NavBar() {
   const [isScrolled, setIsScrolled] = useState(false)
+  const pathname = usePathname()
+  const isCurrent = (href: string) =>
+    href === "/alojamientos"
+      ? pathname.startsWith("/alojamientos")
+      : pathname === href
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 12)
@@ -46,6 +52,7 @@ export default function NavBar() {
 
   return (
     <nav
+      aria-label="Navegación principal"
       className={cn(
         "sticky top-0 z-50 w-full border-b border-transparent transition-[background-color,border-color,backdrop-filter] duration-300",
         isScrolled && "border-border/60 bg-background/82 backdrop-blur-xl",
@@ -75,7 +82,8 @@ export default function NavBar() {
                     <SheetClose asChild key={item.name}>
                       <Link
                         href={item.href}
-                        className="rounded-md px-3 py-3 text-base font-medium transition-colors hover:bg-muted"
+                        aria-current={isCurrent(item.href) ? "page" : undefined}
+                        className="rounded-md px-3 py-3 text-base font-medium transition-colors hover:bg-muted aria-[current=page]:bg-muted aria-[current=page]:text-foreground"
                       >
                         {item.name}
                       </Link>
@@ -114,7 +122,13 @@ export default function NavBar() {
             <Link href="/#servicios">Servicios</Link>
           </Button>
           <Button asChild variant="ghost" size="sm">
-            <Link href="/alojamientos">Alojamientos</Link>
+            <Link
+              href="/alojamientos"
+              aria-current={isCurrent("/alojamientos") ? "page" : undefined}
+              className="aria-[current=page]:bg-accent aria-[current=page]:text-accent-foreground"
+            >
+              Alojamientos
+            </Link>
           </Button>
           <Button asChild variant="ghost" size="sm">
             <Link href="/#preguntas">Preguntas</Link>
@@ -164,7 +178,12 @@ export default function NavBar() {
 
         <div className="flex items-center gap-2">
           <Button asChild className="hidden sm:inline-flex" size="sm">
-            <Link href="/contacto">Contacto</Link>
+            <Link
+              href="/contacto"
+              aria-current={isCurrent("/contacto") ? "page" : undefined}
+            >
+              Contacto
+            </Link>
           </Button>
           <ThemeSwitcher />
         </div>

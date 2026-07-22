@@ -41,18 +41,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       title: `${property.name} | Nico Experience`,
       description: property.shortDescription,
       url: path,
-      images: [
-        {
-          url: property.featuredImage,
-          alt: `Vista principal de ${property.name}`,
-        },
-      ],
     },
     twitter: {
       card: "summary_large_image",
       title: `${property.name} | Nico Experience`,
       description: property.shortDescription,
-      images: [property.featuredImage],
     },
   }
 }

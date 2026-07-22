@@ -31,6 +31,9 @@ yarn-error.log*
 # vercel
 .vercel
 
+# local browser automation artifacts
+.playwright-cli/
+
 # original high-resolution source photos kept locally, not deployed
 /source-photos/
 /.corepack-bin/
@@ -40,6 +43,7 @@ yarn-error.log*
 /tmp/qa.cjs
 /tmp/imagegen/
 /output/playwright/
+/output/lighthouse-*.json
 
 # typescript
 *.tsbuildinfo
