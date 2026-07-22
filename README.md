@@ -56,6 +56,8 @@ La ubicación oficial de Nico Experience se centraliza en `config/business.ts`, 
 7. Marca `active: true` cuando esté listo para publicarse y `featured: true` si debe aparecer en inicio.
 8. Ejecuta lint, typecheck, pruebas y build. La ruta `/alojamientos/<slug>`, la ficha PDF y el sitemap se generan automáticamente.
 
+El catálogo visual se genera desde `activeProperties` mediante `components/property-catalog.tsx`. Una propiedad se centra; dos o más pasan automáticamente a una grilla responsive de dos y tres columnas. La composición destacada de la página principal permanece separada en `components/pricing.tsx`.
+
 ## Actualizar contenido
 
 - Cambiar una fotografía: reemplaza el derivado en `public/images/<slug>/` manteniendo el nombre o actualiza `src` en `content/properties.ts`. Conserva proporción y original.
@@ -69,6 +71,7 @@ La ubicación oficial de Nico Experience se centraliza en `config/business.ts`, 
 - Regenerar fotografías: ejecuta `py -3 scripts/optimize-property-photos.py` desde los originales preservados y revisa visualmente el resultado.
 - Regenerar marca y PDF: ejecuta `py -3 scripts/prepare-brand-and-pdf-assets.py`; conserva `source-assets/brand/nico-experience-logo.jpeg` y `source-assets/hero/nico-experience-neutral.png` como fuentes recuperables.
 - Cambiar el logo: reemplaza únicamente `source-assets/brand/nico-experience-logo.jpeg`, ejecuta el script anterior y revisa navbar, footer, claro, oscuro y las fichas PDF.
+- Lockup transparente del footer: `public/brand/nico-experience-lockup-transparent.webp`. Conserva siempre el JPEG original como fuente y valida manualmente texto, símbolo, transparencia y contraste antes de sustituir este derivado.
 - Cambiar el hero neutral: reemplaza `source-assets/hero/nico-experience-neutral.png`, ejecuta el script y confirma que la imagen no represente falsamente una propiedad, destino o persona real.
 
 ## Descargas PDF
