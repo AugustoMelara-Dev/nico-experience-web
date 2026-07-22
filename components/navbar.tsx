@@ -2,13 +2,29 @@
 
 import Link from "next/link"
 import { useEffect, useState } from "react"
-import { AnimatePresence, motion } from "framer-motion"
-import { ChevronDownIcon, Cross1Icon, HamburgerMenuIcon } from "@radix-ui/react-icons"
-import { House, MapPin } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import ThemeSwitcher from "@/components/theme-switcher"
+import { ChevronDown, House, MapPin, Menu } from "lucide-react"
+
 import { BrandLogo } from "@/components/brand-logo"
+import ThemeSwitcher from "@/components/theme-switcher"
+import { Button } from "@/components/ui/button"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet"
+import { businessConfig } from "@/config/business"
+import { cn } from "@/lib/utils"
 
 const menuItems = [
   { name: "Inicio", href: "/" },
@@ -19,87 +35,139 @@ const menuItems = [
 ]
 
 export default function NavBar() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 0)
+    const handleScroll = () => setIsScrolled(window.scrollY > 12)
     handleScroll()
     window.addEventListener("scroll", handleScroll, { passive: true })
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
-  const showNavbarBlur = isScrolled || isMenuOpen
-
   return (
-    <nav className={`sticky top-0 z-50 w-full transition-[background-color,backdrop-filter] duration-300 ease-out ${showNavbarBlur ? "backdrop-blur supports-backdrop-filter:bg-background/60" : "backdrop-blur-0 supports-backdrop-filter:bg-background/0"}`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
-          <div className="flex sm:hidden">
-            <Button variant="ghost" size="icon" onClick={() => setIsMenuOpen(!isMenuOpen)} className="relative" aria-label={isMenuOpen ? "Cerrar menú" : "Abrir menú"} aria-expanded={isMenuOpen}>
-              <motion.div animate={{ rotate: isMenuOpen ? 90 : 0 }} transition={{ duration: 0.3, ease: "easeInOut" }}>
-                {isMenuOpen ? <Cross1Icon /> : <HamburgerMenuIcon />}
-              </motion.div>
-            </Button>
-          </div>
-          <div className="flex sm:hidden">
-            <Link href="/" aria-label="Nico Experience, inicio">
-              <BrandLogo compact priority />
-            </Link>
-          </div>
-          <div className="hidden sm:flex items-center space-x-8">
-            <Link href="/" aria-label="Nico Experience, inicio">
-              <BrandLogo compact priority />
-            </Link>
-            <Button asChild variant="ghost" size="sm"><Link href="/#servicios">Servicios</Link></Button>
-            <Button asChild variant="ghost" size="sm"><Link href="/alojamientos">Alojamientos</Link></Button>
-            <Button asChild variant="ghost" size="sm"><Link href="/#preguntas">Preguntas</Link></Button>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="sm">Casa Palac<ChevronDownIcon className="ml-1 h-4 w-4" /></Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-80">
+    <nav
+      className={cn(
+        "sticky top-0 z-50 w-full border-b border-transparent transition-[background-color,border-color,backdrop-filter] duration-300",
+        isScrolled && "border-border/60 bg-background/82 backdrop-blur-xl",
+      )}
+    >
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center gap-3 sm:hidden">
+          <Sheet>
+            <SheetTrigger asChild>
+              <Button variant="ghost" size="icon" aria-label="Abrir menú">
+                <Menu aria-hidden="true" />
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="left" className="w-[88vw] max-w-sm">
+              <SheetHeader className="border-b p-6">
+                <BrandLogo compact />
+                <SheetTitle className="sr-only">
+                  Navegación principal
+                </SheetTitle>
+                <SheetDescription className="sr-only">
+                  Enlaces principales de Nico Experience
+                </SheetDescription>
+              </SheetHeader>
+              <div className="flex flex-1 flex-col p-4">
+                <div className="grid gap-1" aria-label="Navegación móvil">
+                  {menuItems.map((item) => (
+                    <SheetClose asChild key={item.name}>
+                      <Link
+                        href={item.href}
+                        className="rounded-md px-3 py-3 text-base font-medium transition-colors hover:bg-muted"
+                      >
+                        {item.name}
+                      </Link>
+                    </SheetClose>
+                  ))}
+                </div>
+                <div className="mt-auto flex flex-col gap-3 border-t pt-5">
+                  <Button asChild variant="outline" className="justify-start">
+                    <Link href="/alojamientos/casa-palac">
+                      <House data-icon="inline-start" />
+                      Casa Palac
+                    </Link>
+                  </Button>
+                  <Button asChild variant="ghost" className="justify-start">
+                    <Link
+                      href={businessConfig.mapsUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <MapPin data-icon="inline-start" />
+                      Ubicación del negocio
+                    </Link>
+                  </Button>
+                </div>
+              </div>
+            </SheetContent>
+          </Sheet>
+        </div>
+
+        <Link href="/" aria-label="Nico Experience, inicio">
+          <BrandLogo compact priority />
+        </Link>
+
+        <div className="hidden items-center gap-1 sm:flex">
+          <Button asChild variant="ghost" size="sm">
+            <Link href="/#servicios">Servicios</Link>
+          </Button>
+          <Button asChild variant="ghost" size="sm">
+            <Link href="/alojamientos">Alojamientos</Link>
+          </Button>
+          <Button asChild variant="ghost" size="sm">
+            <Link href="/#preguntas">Preguntas</Link>
+          </Button>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" size="sm">
+                Explorar
+                <ChevronDown data-icon="inline-end" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-80" align="end">
+              <DropdownMenuGroup>
                 <DropdownMenuItem asChild>
                   <Link href="/alojamientos/casa-palac" className="items-start">
-                    <House className="mr-2 mt-0.5 h-4 w-4" />
+                    <House className="mt-0.5 size-4" aria-hidden="true" />
                     <div>
                       <div className="font-semibold">Casa Palac</div>
-                      <div className="text-sm text-muted-foreground">Una casa ubicada frente a la playa.</div>
+                      <div className="text-sm text-muted-foreground">
+                        Una casa ubicada frente a la playa.
+                      </div>
                     </div>
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
-                  <Link href="https://maps.app.goo.gl/BhDjLciEvjhp8pBN8?g_st=iw" target="_blank" rel="noopener noreferrer" className="items-start">
-                    <MapPin className="mr-2 mt-0.5 h-4 w-4" />
+                  <Link
+                    href={businessConfig.mapsUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="items-start"
+                  >
+                    <MapPin className="mt-0.5 size-4" aria-hidden="true" />
                     <div>
-                      <div className="font-semibold">Google Maps</div>
-                      <div className="text-sm text-muted-foreground">Abre la ubicación proporcionada por Nico Experience.</div>
+                      <div className="font-semibold">
+                        Ubicación de Nico Experience
+                      </div>
+                      <div className="text-sm text-muted-foreground">
+                        {businessConfig.locationLabel}
+                      </div>
                     </div>
                   </Link>
                 </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
-          <div className="flex items-center space-x-4">
-            <Button asChild className="hidden sm:flex" size="sm"><Link href="/contacto">Contacto</Link></Button>
-            <ThemeSwitcher />
-          </div>
+              </DropdownMenuGroup>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
-        <AnimatePresence>
-          {isMenuOpen && (
-            <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }} transition={{ duration: 0.3, ease: "easeInOut" }} className="sm:hidden overflow-hidden">
-              <motion.div initial={{ y: -20 }} animate={{ y: 0 }} exit={{ y: -20 }} transition={{ duration: 0.3, delay: 0.1 }} className="px-2 pt-2 pb-3 space-y-1">
-                {menuItems.map((item, index) => (
-                  <motion.div key={item.name} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.3, delay: 0.2 + index * 0.1 }}>
-                    <Link href={item.href} className="block px-3 py-2 text-base font-medium text-foreground hover:bg-muted rounded-md transition-colors duration-200" onClick={() => setIsMenuOpen(false)}>
-                      {item.name}
-                    </Link>
-                  </motion.div>
-                ))}
-              </motion.div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+
+        <div className="flex items-center gap-2">
+          <Button asChild className="hidden sm:inline-flex" size="sm">
+            <Link href="/contacto">Contacto</Link>
+          </Button>
+          <ThemeSwitcher />
+        </div>
       </div>
     </nav>
   )
