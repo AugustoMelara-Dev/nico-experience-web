@@ -6,7 +6,9 @@ export const siteConfig = {
   name: "Nico Experience",
   description:
     "Turismo y soluciones integrales en Tocoa, Colón: viajes, hospedaje, trámites, gestiones y soluciones digitales con atención personalizada.",
-  siteUrl: env(process.env.NEXT_PUBLIC_SITE_URL) || "http://localhost:3000",
+  siteUrl:
+    env(process.env.NEXT_PUBLIC_SITE_URL) ||
+    "https://nico-experience-web.vercel.app",
   whatsappNumber:
     env(process.env.NEXT_PUBLIC_WHATSAPP_NUMBER) || "50493731060",
   phone: env(process.env.NEXT_PUBLIC_PHONE) || "+504 9373-1060",

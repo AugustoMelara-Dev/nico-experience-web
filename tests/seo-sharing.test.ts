@@ -1,11 +1,16 @@
 import { existsSync, readFileSync } from "node:fs"
 import { join } from "node:path"
 import { describe, expect, it } from "vitest"
+import { siteConfig } from "../config/site"
 
 const source = (path: string) =>
   readFileSync(join(process.cwd(), path), "utf8")
 
 describe("SEO, accesibilidad y contenido compartido", () => {
+  it("mantiene un dominio canónico público aunque falte la variable local", () => {
+    expect(siteConfig.siteUrl).toBe("https://nico-experience-web.vercel.app")
+  })
+
   it("genera tarjetas sociales de marca para el negocio y cada alojamiento", () => {
     const globalOg = source("app/opengraph-image.tsx")
     const propertyOg = source("app/alojamientos/[slug]/opengraph-image.tsx")
