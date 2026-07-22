@@ -1,17 +1,18 @@
 "use client"
 
 import Link from "next/link"
-import { motion } from "framer-motion"
+import { motion, useReducedMotion } from "framer-motion"
 import {
+  ArrowUpRight,
   BedDouble,
   BriefcaseBusiness,
   FileText,
   MonitorSmartphone,
   Plane,
 } from "lucide-react"
-import { services, type Service } from "@/content/services"
+
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardFooter } from "@/components/ui/card"
+import { services, type Service } from "@/content/services"
 
 const icons: Record<Service["icon"], typeof Plane> = {
   plane: Plane,
@@ -22,63 +23,58 @@ const icons: Record<Service["icon"], typeof Plane> = {
 }
 
 export default function ServiceCards() {
+  const shouldReduceMotion = useReducedMotion()
+
   return (
     <section
       id="servicios"
-      className="mx-auto w-full max-w-7xl px-4 py-16 sm:py-24 md:px-8"
+      className="mx-auto w-full max-w-7xl px-4 py-20 md:px-8 md:py-28"
     >
-      <motion.div
-        initial={{ y: 20, opacity: 0 }}
-        whileInView={{ y: 0, opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6, type: "spring", bounce: 0 }}
-        className="mb-12 flex flex-col items-center gap-3 text-center sm:mb-16"
-      >
-        <span className="w-fit rounded-full border border-border bg-card px-2 py-1 text-sm">
-          Todo en un solo lugar
-        </span>
-        <h2 className="bg-linear-to-b from-foreground to-muted-foreground bg-clip-text text-xl font-semibold text-transparent sm:text-2xl">
-          Soluciones pensadas para ti
-        </h2>
-        <p className="max-w-2xl text-balance text-muted-foreground">
-          Te acompañamos de forma cercana y práctica para encontrar una
-          respuesta adaptada a lo que necesitas.
+      <div className="mb-12 grid gap-5 md:mb-16 md:grid-cols-[.72fr_1.28fr] md:items-end">
+        <div className="flex flex-col items-start gap-3">
+          <span className="text-sm font-medium text-primary">
+            Todo en un solo lugar
+          </span>
+          <h2 className="max-w-xl text-3xl font-medium tracking-tighter sm:text-4xl">
+            Soluciones pensadas alrededor de ti
+          </h2>
+        </div>
+        <p className="max-w-2xl text-base leading-7 text-muted-foreground md:justify-self-end">
+          Desde organizar un viaje hasta resolver una gestión o impulsar una
+          necesidad digital, te acompañamos con atención cercana y una ruta
+          clara.
         </p>
-      </motion.div>
+      </div>
 
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="divide-y divide-border border-y">
         {services.map((service, index) => {
           const Icon = icons[service.icon]
+
           return (
-            <motion.div
+            <motion.article
               key={service.slug}
-              initial={{ y: 20, opacity: 0 }}
+              initial={{ y: shouldReduceMotion ? 0 : 18, opacity: 0 }}
               whileInView={{ y: 0, opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.08 }}
-              className={index > 2 ? "lg:translate-x-1/2" : undefined}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ duration: 0.5, delay: index * 0.06 }}
+              className="grid gap-5 py-7 md:grid-cols-[auto_.55fr_1fr_auto] md:items-center md:gap-8 md:py-9"
             >
-              <Card className="h-full rounded-2xl">
-                <CardContent className="space-y-4">
-                  <div className="flex size-10 items-center justify-center rounded-xl border border-border bg-background">
-                    <Icon className="size-5" aria-hidden="true" />
-                  </div>
-                  <div className="space-y-2">
-                    <h3 className="font-semibold">{service.title}</h3>
-                    <p className="text-sm leading-6 text-muted-foreground">
-                      {service.description}
-                    </p>
-                  </div>
-                </CardContent>
-                <CardFooter>
-                  <Button asChild variant="outline" className="w-full">
-                    <Link href={`/contacto?servicio=${service.slug}`}>
-                      Consultar
-                    </Link>
-                  </Button>
-                </CardFooter>
-              </Card>
-            </motion.div>
+              <div className="flex size-11 items-center justify-center rounded-full border bg-card">
+                <Icon className="size-5" aria-hidden="true" />
+              </div>
+              <h3 className="text-xl font-semibold tracking-tight">
+                {service.title}
+              </h3>
+              <p className="max-w-2xl text-sm leading-6 text-muted-foreground sm:text-base sm:leading-7">
+                {service.description}
+              </p>
+              <Button asChild variant="ghost" className="w-fit">
+                <Link href={`/contacto?servicio=${service.slug}`}>
+                  Consultar
+                  <ArrowUpRight data-icon="inline-end" />
+                </Link>
+              </Button>
+            </motion.article>
           )
         })}
       </div>

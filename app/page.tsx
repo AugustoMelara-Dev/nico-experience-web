@@ -15,7 +15,9 @@ export default function Home() {
       <Pricing />
       <Testimonials />
       <Faq />
+      <ClosingCta />
       <Footer />
     </main>
   )
 }
+import ClosingCta from "@/components/closing-cta"

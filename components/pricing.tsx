@@ -2,75 +2,114 @@
 
 import Image from "next/image"
 import Link from "next/link"
-import { CheckIcon } from "@radix-ui/react-icons"
-import { motion } from "framer-motion"
+import { ArrowRight, Check, MapPin } from "lucide-react"
+import { motion, useReducedMotion } from "framer-motion"
+
 import { Button } from "@/components/ui/button"
-import { Separator } from "@/components/ui/separator"
-import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { WhatsAppLink } from "@/components/whatsapp-link"
-import { featuredProperties } from "@/content/properties"
+import { featuredProperties, type Property } from "@/content/properties"
+
+function FeaturedProperty({
+  property,
+  index,
+}: {
+  property: Property
+  index: number
+}) {
+  const shouldReduceMotion = useReducedMotion()
+
+  return (
+    <motion.article
+      initial={{ y: shouldReduceMotion ? 0 : 20, opacity: 0 }}
+      whileInView={{ y: 0, opacity: 1 }}
+      viewport={{ once: true, margin: "-80px" }}
+      transition={{ duration: 0.6, delay: index * 0.08 }}
+      className="overflow-hidden rounded-2xl border bg-card lg:grid lg:grid-cols-[1.2fr_.8fr]"
+    >
+      <div className="relative min-h-80 overflow-hidden lg:min-h-[34rem]">
+        <Image
+          src={property.featuredImage}
+          alt={`Piscina iluminada de ${property.name}`}
+          fill
+          quality={90}
+          sizes="(min-width: 1024px) 62vw, 100vw"
+          className="object-cover transition-transform duration-700 hover:scale-[1.02]"
+        />
+        <div className="absolute inset-0 bg-linear-to-t from-foreground/35 to-transparent lg:hidden" />
+      </div>
+
+      <div className="flex flex-col justify-center gap-7 p-6 sm:p-8 lg:p-10">
+        <div className="flex w-fit items-center gap-2 rounded-full border bg-background px-3 py-1 text-sm">
+          <MapPin className="size-4" aria-hidden="true" />
+          {property.locationLabel}
+        </div>
+        <div className="flex flex-col gap-3">
+          <h3 className="text-3xl font-medium tracking-tighter sm:text-4xl">
+            {property.name}
+          </h3>
+          <p className="leading-7 text-muted-foreground">
+            {property.shortDescription}
+          </p>
+        </div>
+        <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
+          {property.amenities
+            .filter((item) => item.confirmed)
+            .slice(0, 5)
+            .map((item) => (
+              <li key={item.label} className="flex items-center gap-3 text-sm">
+                <span className="flex size-6 items-center justify-center rounded-full bg-primary/10 text-primary">
+                  <Check className="size-3.5" aria-hidden="true" />
+                </span>
+                {item.label}
+              </li>
+            ))}
+        </ul>
+        <div className="flex flex-col gap-3 sm:flex-row lg:flex-col xl:flex-row">
+          <Button asChild size="lg">
+            <Link href={`/alojamientos/${property.slug}`}>
+              Ver alojamiento
+              <ArrowRight data-icon="inline-end" />
+            </Link>
+          </Button>
+          <WhatsAppLink
+            message={property.whatsappMessage}
+            label="Consultar"
+            variant="outline"
+          />
+        </div>
+      </div>
+    </motion.article>
+  )
+}
 
 export default function Pricing() {
   return (
-    <section id="alojamientos" className="mx-auto w-full max-w-7xl px-3 py-16 sm:px-4 sm:py-24 md:px-6">
-      <motion.div
-        initial={{ y: 20, opacity: 0 }}
-        whileInView={{ y: 0, opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
-        className="mb-12 flex flex-col gap-3 text-center sm:mb-16"
-      >
-        <h2 className="text-xl font-semibold sm:text-2xl bg-linear-to-b from-foreground to-muted-foreground text-transparent bg-clip-text">
-          Alojamientos para vivir la experiencia
-        </h2>
-        <p className="mx-auto max-w-xl text-muted-foreground text-center">
-          Explora fotografías reales, conoce sus espacios y consulta directamente con Nico Experience.
+    <section
+      id="alojamientos"
+      className="mx-auto w-full max-w-7xl px-4 py-20 md:px-8 md:py-28"
+    >
+      <div className="mb-12 flex flex-col gap-4 md:mb-16 md:flex-row md:items-end md:justify-between">
+        <div className="flex max-w-2xl flex-col gap-3">
+          <span className="text-sm font-medium text-primary">
+            Hospedaje seleccionado
+          </span>
+          <h2 className="text-3xl font-medium tracking-tighter sm:text-4xl">
+            Lugares para vivir la experiencia
+          </h2>
+        </div>
+        <p className="max-w-lg leading-7 text-muted-foreground">
+          Fotografías reales, información prudente y atención directa para
+          ayudarte a elegir con confianza.
         </p>
-      </motion.div>
+      </div>
 
-      <div className="mx-auto grid max-w-7xl grid-cols-[repeat(auto-fit,minmax(min(100%,20rem),1fr))] gap-4 sm:gap-6 md:gap-8">
+      <div className="grid gap-8">
         {featuredProperties.map((property, index) => (
-          <motion.div
+          <FeaturedProperty
             key={property.slug}
-            initial={{ y: 20, opacity: 0 }}
-            whileInView={{ y: 0, opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: index * 0.1 }}
-            className="relative w-full max-w-md justify-self-center"
-          >
-            <Card className="relative h-full rounded-2xl border-2 border-primary bg-primary/5 shadow-lg">
-              <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-                <span className="whitespace-nowrap rounded-full border-2 border-primary bg-card px-3 py-1 text-xs font-medium sm:px-4 sm:text-sm">
-                  {property.locationLabel}
-                </span>
-              </div>
-              <CardContent className="p-4 pt-6 sm:p-6 sm:pt-8">
-                <div className="relative mb-5 aspect-[4/3] overflow-hidden rounded-xl border border-border">
-                  <Image src={property.featuredImage} alt={`Piscina iluminada de ${property.name}`} fill quality={90} sizes="(min-width: 768px) 33vw, 100vw" className="object-cover" />
-                </div>
-                <div className="mb-5 text-center sm:mb-6">
-                  <h3 className="mb-2 text-lg font-semibold sm:text-xl">{property.name}</h3>
-                  <p className="mb-3 text-sm text-muted-foreground sm:mb-4">{property.shortDescription}</p>
-                  <div className="text-lg font-semibold">Consulta disponibilidad</div>
-                </div>
-                <Separator className="my-4 sm:my-6" />
-                <ul className="space-y-2.5 sm:space-y-3">
-                  {property.amenities.filter((item) => item.confirmed).slice(0, 5).map((item) => (
-                    <li key={item.label} className="flex items-center text-xs sm:text-sm">
-                      <CheckIcon className="mr-2 h-4 w-4 shrink-0 text-primary sm:mr-3" />
-                      {item.label}
-                    </li>
-                  ))}
-                </ul>
-              </CardContent>
-              <CardFooter className="flex-col gap-2 p-4 pt-0 sm:p-6 sm:pt-0">
-                <Button asChild className="w-full" size="lg">
-                  <Link href={`/alojamientos/${property.slug}`}>Ver alojamiento</Link>
-                </Button>
-                <WhatsAppLink message={property.whatsappMessage} label="Consultar" variant="outline" />
-              </CardFooter>
-            </Card>
-          </motion.div>
+            property={property}
+            index={index}
+          />
         ))}
       </div>
     </section>
