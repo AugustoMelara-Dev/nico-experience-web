@@ -41,20 +41,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       title: `${property.name} | Nico Experience`,
       description: property.shortDescription,
       url: path,
-      images: [
-        {
-          url: `${path}/opengraph-image`,
-          width: 1200,
-          height: 630,
-          alt: `${property.name}, presentado por Nico Experience`,
-        },
-      ],
     },
     twitter: {
       card: "summary_large_image",
       title: `${property.name} | Nico Experience`,
       description: property.shortDescription,
-      images: [`${path}/opengraph-image`],
     },
   }
 }

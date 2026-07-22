@@ -19,6 +19,9 @@ describe("SEO, accesibilidad y contenido compartido", () => {
     expect(globalOg).toContain("SocialCard")
     expect(propertyOg).toContain("property?.socialImage")
     expect(propertyOg).toContain("1200, height: 630")
+    expect(source("app/alojamientos/[slug]/page.tsx")).not.toContain(
+      "`${path}/opengraph-image`",
+    )
     expect(socialCard).toContain("Nico Experience")
     expect(socialCard).not.toContain("SaaS")
     expect(existsSync(join(process.cwd(), "app/opengraph-image.png"))).toBe(false)
