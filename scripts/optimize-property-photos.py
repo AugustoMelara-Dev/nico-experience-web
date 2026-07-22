@@ -1,7 +1,7 @@
 """Regenera las fotos WebP desde los JPEG originales sin alterar su contenido."""
 
 from pathlib import Path
-from PIL import Image, ImageOps
+from PIL import Image, ImageFilter, ImageOps
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "source-photos" / "casa-vip"
@@ -45,10 +45,20 @@ def main() -> None:
     for source, name in zip(sources, NAMES, strict=True):
         with Image.open(source) as image:
             normalized = ImageOps.exif_transpose(image).convert("RGB")
-            normalized.save(
+            scale = 1920 / max(normalized.size)
+            enhanced = normalized.resize(
+                (
+                    round(normalized.width * scale),
+                    round(normalized.height * scale),
+                ),
+                Image.Resampling.LANCZOS,
+            ).filter(
+                ImageFilter.UnsharpMask(radius=1.15, percent=85, threshold=3),
+            )
+            enhanced.save(
                 OUTPUT / f"{name}.webp",
                 "WEBP",
-                quality=90,
+                quality=93,
                 method=6,
                 exact=True,
             )

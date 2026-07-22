@@ -31,7 +31,7 @@ function FeaturedProperty({
           src={property.featuredImage}
           alt={`Piscina iluminada de ${property.name}`}
           fill
-          quality={90}
+          quality={95}
           sizes="(min-width: 1024px) 62vw, 100vw"
           className="object-cover transition-transform duration-700 hover:scale-[1.02]"
         />

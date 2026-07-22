@@ -35,7 +35,7 @@ describe("presentación de alojamientos", () => {
     expect(pricing).toContain("featuredProperties")
   })
 
-  it("usa un hero fotográfico y una descarga contextual", () => {
+  it("usa un hero fotográfico con acciones para consultar, compartir y explorar", () => {
     const page = readFileSync(
       join(process.cwd(), "app/alojamientos/[slug]/page.tsx"),
       "utf8",
@@ -48,9 +48,12 @@ describe("presentación de alojamientos", () => {
     expect(page).toContain("<PropertyHero")
     expect(page).not.toContain('aspect-[16/9]')
     expect(hero).toContain("property.featuredImage")
-    expect(hero).toContain("/api/alojamientos/${property.slug}/pdf")
+    expect(hero).toContain("<ShareButton")
+    expect(hero).toContain('href="#album-title"')
+    expect(hero).not.toContain("PdfDownloadLink")
+    expect(hero).not.toContain("/pdf")
     expect(hero).toContain("sizes=")
-    expect(hero).toContain("border-white/30 bg-white/10 text-white")
+    expect(hero).toContain("border-white/35 bg-black/25 text-white")
   })
 
   it("usa un hero de fondo y mantiene ubicaciones separadas", () => {

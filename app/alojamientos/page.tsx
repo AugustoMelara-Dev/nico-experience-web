@@ -1,8 +1,11 @@
 import type { Metadata } from "next"
+import Link from "next/link"
+import { MessageCircle } from "lucide-react"
 
 import Footer from "@/components/footer"
-import { PdfDownloadLink } from "@/components/pdf-download-link"
 import { PropertyCatalog } from "@/components/property-catalog"
+import { ShareButton } from "@/components/share-button"
+import { Button } from "@/components/ui/button"
 import { activeProperties } from "@/content/properties"
 
 export const metadata: Metadata = {
@@ -28,10 +31,20 @@ export default function PropertiesPage() {
             para conocer cada propiedad antes de consultar.
           </p>
         </div>
-        <PdfDownloadLink
-          href="/api/alojamientos/catalogo/pdf"
-          label="Descargar catálogo PDF"
-        />
+        <div className="flex w-full flex-col justify-center gap-3 sm:w-auto sm:flex-row">
+          <Button asChild>
+            <Link href="/contacto?servicio=hospedaje">
+              <MessageCircle data-icon="inline-start" aria-hidden="true" />
+              Consultar hospedaje
+            </Link>
+          </Button>
+          <ShareButton
+            title="Alojamientos de Nico Experience"
+            text="Conoce los alojamientos disponibles en Nico Experience."
+            url="/alojamientos"
+            label="Compartir catálogo"
+          />
+        </div>
       </section>
 
       <PropertyCatalog properties={activeProperties} />

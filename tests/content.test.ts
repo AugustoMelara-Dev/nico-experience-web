@@ -36,21 +36,6 @@ describe("contenido de alojamientos", () => {
     expect(images.every((item) => Boolean(item.alt && item.title && item.description))).toBe(true)
   })
 
-  it("selecciona seis imágenes compatibles para la ficha PDF", () => {
-    const selected = getProperty(slug)!.media.filter(
-      (item) => item.type === "image" && item.includeInPdf,
-    )
-
-    expect(selected).toHaveLength(6)
-    expect(
-      selected.every(
-        (item) =>
-          item.pdfSrc?.startsWith("/pdf-assets/casa-palac/") &&
-          item.pdfSrc.endsWith(".jpg"),
-      ),
-    ).toBe(true)
-  })
-
   it("mantiene el catálogo derivado únicamente de propiedades activas", () => {
     expect(
       featuredProperties.every(

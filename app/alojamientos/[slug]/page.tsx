@@ -43,8 +43,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       url: path,
       images: [
         {
-          url: property.featuredImage,
-          alt: `Vista principal de ${property.name}`,
+          url: `${path}/opengraph-image`,
+          width: 1200,
+          height: 630,
+          alt: `${property.name}, presentado por Nico Experience`,
         },
       ],
     },
@@ -52,7 +54,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       card: "summary_large_image",
       title: `${property.name} | Nico Experience`,
       description: property.shortDescription,
-      images: [property.featuredImage],
+      images: [`${path}/opengraph-image`],
     },
   }
 }

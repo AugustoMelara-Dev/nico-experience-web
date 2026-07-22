@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { motion } from "framer-motion"
+import { motion, useReducedMotion } from "framer-motion"
 import { ExternalLink, MapPin, MessageCircle, Phone } from "lucide-react"
 
 import { BrandLogo } from "@/components/brand-logo"
@@ -14,6 +14,7 @@ import { getProperty } from "@/content/properties"
 import { buildWhatsAppUrl } from "@/lib/whatsapp"
 
 export default function Footer() {
+  const shouldReduceMotion = useReducedMotion()
   const year = new Date().getFullYear()
   const property = getProperty("casa-palac")!
   const whatsappUrl = buildWhatsAppUrl(
@@ -31,7 +32,7 @@ export default function Footer() {
     <footer className="w-full border-t bg-card/35">
       <div className="mx-auto max-w-6xl px-4 py-16 sm:py-20">
         <motion.div
-          initial={{ opacity: 0, y: 16 }}
+          initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.55 }}
@@ -84,10 +85,13 @@ export default function Footer() {
                 <span>{businessConfig.locationLabel}</span>
                 <ExternalLink className="mt-0.5 size-3.5" aria-hidden="true" />
               </Link>
-              <div className="flex items-center gap-3 text-sm text-muted-foreground">
+              <a
+                href={`tel:${siteConfig.phone.replace(/[^+\d]/g, "")}`}
+                className="flex items-center gap-3 text-sm text-muted-foreground transition-colors hover:text-foreground"
+              >
                 <Phone className="size-4" aria-hidden="true" />
                 <span>{siteConfig.phone}</span>
-              </div>
+              </a>
               <Button asChild variant="outline" className="w-fit">
                 <Link
                   href={whatsappUrl ?? "/contacto"}

@@ -2,10 +2,11 @@
 
 import Image from "next/image"
 import Link from "next/link"
+import { Images } from "lucide-react"
 import { motion, useReducedMotion } from "framer-motion"
 
-import { PdfDownloadLink } from "@/components/pdf-download-link"
 import { ShareButton } from "@/components/share-button"
+import { Button } from "@/components/ui/button"
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -26,12 +27,12 @@ export function PropertyHero({ property }: { property: Property }) {
         alt={`Vista principal de ${property.name}`}
         fill
         priority
-        quality={90}
+        quality={95}
         sizes="100vw"
         className="object-cover object-center"
       />
-      <div className="absolute inset-0 bg-linear-to-r from-[color:var(--brand-navy)]/78 via-[color:var(--brand-navy)]/42 to-transparent" />
-      <div className="absolute inset-0 bg-linear-to-t from-background/90 via-transparent to-foreground/10" />
+      <div className="absolute inset-0 bg-linear-to-r from-[color:var(--brand-navy)]/68 via-[color:var(--brand-navy)]/32 to-transparent" />
+      <div className="absolute inset-0 bg-linear-to-t from-black/55 via-transparent to-black/10" />
 
       <div className="relative mx-auto w-full max-w-(--breakpoint-xl) px-4 pt-8 md:px-8">
         <Breadcrumb>
@@ -87,13 +88,20 @@ export function PropertyHero({ property }: { property: Property }) {
             />
             <ShareButton
               title={property.name}
-              className="border-white/30 bg-white/10 text-white backdrop-blur-sm hover:bg-white/15 hover:text-white"
+              text={`${property.shortDescription} Conoce sus espacios y consulta disponibilidad con Nico Experience.`}
+              url={`/alojamientos/${property.slug}`}
+              className="border-white/35 bg-black/25 text-white backdrop-blur-sm hover:bg-black/40 hover:text-white"
             />
-            <PdfDownloadLink
-              href={`/api/alojamientos/${property.slug}/pdf`}
-              label="Descargar ficha"
-              className="border-white/30 bg-white/10 text-white backdrop-blur-sm hover:bg-white/15 hover:text-white"
-            />
+            <Button
+              asChild
+              variant="outline"
+              className="border-white/35 bg-black/25 text-white backdrop-blur-sm hover:bg-black/40 hover:text-white"
+            >
+              <Link href="#album-title">
+                <Images data-icon="inline-start" aria-hidden="true" />
+                Ver galería
+              </Link>
+            </Button>
           </div>
         </motion.div>
       </div>

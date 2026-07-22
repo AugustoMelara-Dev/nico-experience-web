@@ -40,7 +40,7 @@ export function PropertyCard({ property, priority = false }: PropertyCardProps) 
           alt={featuredMedia?.alt ?? property.name}
           fill
           priority={priority}
-          quality={90}
+          quality={95}
           sizes="(min-width: 1280px) 33vw, (min-width: 768px) 50vw, 100vw"
           className="object-cover transition-transform duration-700 group-hover:scale-[1.025]"
         />

@@ -10,8 +10,7 @@ El proyecto está adaptado desde [`gonzalochale/saas-landing-template`](https://
 - `/alojamientos` — catálogo de propiedades activas.
 - `/alojamientos/casa-palac` — micrositio canónico de Casa Palac, ubicada frente a la playa.
 - `/contacto` — formulario que prepara una consulta contextual y continúa por WhatsApp.
-- `/api/alojamientos/casa-palac/pdf` — ficha PDF individual descargable.
-- `/api/alojamientos/catalogo/pdf` — catálogo PDF de propiedades activas.
+- `/alojamientos/casa-palac` — micrositio compartible con galería, ubicación y consulta contextual.
 
 `/alojamientos/casa-palac-frente-a-playa`, `/cabanas`, `/cabanas/casa-vip` y `/nosotros` redirigen a destinos vigentes para conservar enlaces anteriores.
 
@@ -49,19 +48,17 @@ La ubicación oficial de Nico Experience se centraliza en `config/business.ts`, 
 
 1. Guarda sus fotografías optimizadas en `public/images/<slug>/` y conserva los originales fuera de esa carpeta pública.
 2. Agrega un objeto validado por Zod en `content/properties.ts`.
-3. Define un `slug` único, nombre, descripciones, `featuredImage` y medios con título, descripción, categoría y texto alternativo.
+3. Define un `slug` único, nombre, descripciones, `featuredImage`, `socialImage` y medios con título, descripción, categoría y texto alternativo.
 4. Si la ubicación está confirmada, agrega su `mapUrl` y coordenadas propias; no copies las coordenadas del negocio.
-5. Selecciona hasta seis fotografías representativas con `includeInPdf: true` y una variante JPEG local en `pdfSrc` dentro de `public/pdf-assets/<slug>/`.
-6. Incluye únicamente ubicación, características, inventario, capacidad, precio y políticas confirmadas.
-7. Marca `active: true` cuando esté listo para publicarse y `featured: true` si debe aparecer en inicio.
-8. Ejecuta lint, typecheck, pruebas y build. La ruta `/alojamientos/<slug>`, la ficha PDF y el sitemap se generan automáticamente.
+5. Incluye únicamente ubicación, características, inventario, capacidad, precio y políticas confirmadas.
+6. Marca `active: true` cuando esté listo para publicarse y `featured: true` si debe aparecer en inicio.
+7. Ejecuta lint, typecheck, pruebas y build. La ruta `/alojamientos/<slug>`, su tarjeta social y el sitemap se generan automáticamente.
 
 El catálogo visual se genera desde `activeProperties` mediante `components/property-catalog.tsx`. Una propiedad se centra; dos o más pasan automáticamente a una grilla responsive de dos y tres columnas. La composición destacada de la página principal permanece separada en `components/pricing.tsx`.
 
 ## Actualizar contenido
 
 - Cambiar una fotografía: reemplaza el derivado en `public/images/<slug>/` manteniendo el nombre o actualiza `src` en `content/properties.ts`. Conserva proporción y original.
-- Cambiar una fotografía del PDF: reemplaza su JPEG en `public/pdf-assets/<slug>/` o actualiza `pdfSrc`; vuelve a descargar y revisar todas las páginas.
 - Agregar un video: añade una entrada a `videos` con título, URL, proveedor y poster opcional. Los archivos locales no deben reproducirse automáticamente.
 - Modificar una descripción: edita la propiedad o la entrada de `media` correspondiente en `content/properties.ts`.
 - Actualizar la cocina: modifica `kitchenInventory` únicamente con elementos confirmados.
@@ -69,16 +66,15 @@ El catálogo visual se genera desde `activeProperties` mediante `components/prop
 - Cambiar un servicio: edita `content/services.ts`; los iconos disponibles están limitados por el esquema Zod.
 - Cambiar WhatsApp: actualiza `NEXT_PUBLIC_WHATSAPP_NUMBER` y `NEXT_PUBLIC_PHONE` localmente y en Vercel.
 - Regenerar fotografías: ejecuta `py -3 scripts/optimize-property-photos.py` desde los originales preservados y revisa visualmente el resultado.
-- Regenerar marca y PDF: ejecuta `py -3 scripts/prepare-brand-and-pdf-assets.py`; conserva `source-assets/brand/nico-experience-logo.jpeg` y `source-assets/hero/nico-experience-neutral.png` como fuentes recuperables.
-- Cambiar el logo: reemplaza únicamente `source-assets/brand/nico-experience-logo.jpeg`, ejecuta el script anterior y revisa navbar, footer, claro, oscuro y las fichas PDF.
-- Lockup transparente del footer: `public/brand/nico-experience-lockup-transparent.webp`. Conserva siempre el JPEG original como fuente y valida manualmente texto, símbolo, transparencia y contraste antes de sustituir este derivado.
+- Regenerar tarjetas sociales: ejecuta `py -3 scripts/prepare-social-images.py` y revisa ambos fondos a 1200 × 630 px.
+- Regenerar la marca monocromática: ejecuta `py -3 scripts/prepare-brand-assets.py`; conserva `source-assets/brand/nico-experience-logo.jpeg` como fuente recuperable.
+- Cambiar el logo: reemplaza únicamente `source-assets/brand/nico-experience-logo.jpeg`, ejecuta el script anterior y revisa navbar, footer, modo claro, modo oscuro y las tarjetas sociales.
+- Lockup monocromático del footer: `public/brand/nico-experience-lockup-mono.webp`. Conserva siempre el JPEG original como fuente y valida manualmente texto, símbolo, transparencia y contraste antes de sustituir este derivado.
 - Cambiar el hero neutral: reemplaza `source-assets/hero/nico-experience-neutral.png`, ejecuta el script y confirma que la imagen no represente falsamente una propiedad, destino o persona real.
 
-## Descargas PDF
+## Contenido compartido
 
-Las fichas se generan en el servidor con `@react-pdf/renderer` desde los mismos datos Zod que usa la web. No dupliques textos dentro de los componentes PDF. La ficha individual incluye hasta seis fotos y el catálogo usa únicamente propiedades activas. Un slug inexistente o inactivo responde 404.
-
-Después de cambiar contenido o fotografías, descarga ambos PDF, guárdalos temporalmente en `output/pdf/`, renderiza todas las páginas con Poppler dentro de `tmp/pdfs/` y verifica cortes, caracteres, enlaces, calidad y peso antes de desplegar.
+La página principal y cada alojamiento generan una tarjeta social de 1200 × 630 px. Después de cambiar contenido o fotografías, revisa la vista previa de Open Graph y usa el botón “Compartir” para validar el enlace canónico antes de desplegar.
 
 ## Datos confirmados
 
